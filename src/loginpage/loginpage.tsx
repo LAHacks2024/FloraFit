@@ -1,4 +1,5 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, Button } from 'react-native';
+import { Users } from '../../backend/api/users.ts';
 
 import React, { useState } from 'react';
 
@@ -7,7 +8,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 import {styles} from './style.ts'
 import {TextInput} from 'react-native-paper'
 
-export default function LogInPage() {
+enum status {
+  LOGGING_IN,
+  NOT_LOGGING_IN,
+  ERROR
+}
+
+export default function LogInPage({navigation}) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
@@ -68,8 +75,9 @@ export default function LogInPage() {
             
           }}
           onPress={()=>{
-            
-
+            const user = new Users()
+            user.loginUser(email, password)
+            navigation.navigate('Home')
           }}>
             <Text
             style={{

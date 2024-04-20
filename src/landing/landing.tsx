@@ -2,7 +2,6 @@ import { StyleSheet, Text, View, Image, TouchableOpacity } from 'react-native';
 import { styles } from './style.ts';
 
 import React from 'react';
-import {styles} from "./style";
 
 
 export default function Landing({ navigation }) {
