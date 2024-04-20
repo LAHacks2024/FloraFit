@@ -13,7 +13,7 @@ import StopJournaling from './src/stop-journaling/stop-journaling';
 
 
 export default function App() {
-  
+  const Stack = createStackNavigator();
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">

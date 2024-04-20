@@ -1,7 +1,7 @@
 {
   "expo": {
     "name": "FloraFit",
-    "slug": "FloraFit",
+    "slug": "flora-fit",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -18,17 +18,23 @@
       "supportsTablet": true,
       "ios.bundleIdentifier": "com.flora-fit.flora-fit",
       "ios.config.googleMapsApiKey": "AIzaSyBBxAQdWkbXtx2_DnNpYyuoJa-hboH1BQc"
-      
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "package": "com.silverarrow975.florafit",
+      "android.config.googleMaps.apiKey": "AIzaSyDJaOiqLBajUD4Av51B2w0_eHbcvIbRTLA"
     },
-
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "1a47b3bf-3638-4bc7-ab8e-fc559267eba3"
+      }
+    },
+    "owner": "silverarrow975"
   }
 }
