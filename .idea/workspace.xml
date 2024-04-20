@@ -5,14 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="718177f3-5574-493c-a522-b892440562b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/src/layout.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/settings/settings.tsx" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/settings/styles.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/backend/entities/UserJournal.entity.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/entities/UserJournal.entity.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/plants/second-stage.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/plants/seed.svg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/assets/plants/sleeping-plant.svg" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/backend/entities/UserPlant.model.ts" beforeDir="false" afterPath="$PROJECT_DIR$/backend/entities/UserPlant.model.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/loginpage/loginpage.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/loginpage/loginpage.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stop-journaling/stop-journaling.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stop-journaling/stop-journaling.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/stop-journaling/style.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stop-journaling/style.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/globalStyles.ts" beforeDir="false" afterPath="$PROJECT_DIR$/src/globalStyles.ts" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/home/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/home/home.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/home/style.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/home/style.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/stop/stop.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stop/stop.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stop/style.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stop/style.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -33,7 +38,7 @@
   <component name="PropertiesComponent">{
   &quot;keyToString&quot;: {
     &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;journaling-flow&quot;,
+    &quot;git-widget-placeholder&quot;: &quot;settings-init&quot;,
     &quot;last_opened_file_path&quot;: &quot;/Users/tatsu/Github/FloraFit&quot;,
     &quot;node.js.detected.package.eslint&quot;: &quot;true&quot;,
     &quot;node.js.detected.package.tslint&quot;: &quot;true&quot;,
@@ -66,6 +71,7 @@
       <updated>1713580855506</updated>
       <workItem from="1713580856619" duration="2742000" />
       <workItem from="1713583620218" duration="1502000" />
+      <workItem from="1713649712174" duration="2073000" />
     </task>
     <servers />
   </component>

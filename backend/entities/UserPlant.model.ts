@@ -10,7 +10,7 @@ export interface UserPlantDTO {
 export interface UserPlant extends GeneralModel, UserPlantDTO { }
 
 export enum PlantStage {
-  FIRST = 'url to image',
-  SECOND = 'url to second',
+  FIRST = require('../../assets/plants/seed.png'),
+  SECOND = require('../../assets/plants/plant_second.png'),
   THIRD = 'query'
 }

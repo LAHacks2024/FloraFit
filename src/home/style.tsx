@@ -31,7 +31,15 @@ export const styles = StyleSheet.create({
     },
     touchable: {
       height: 70,
+      width: 70,
+      overflow: "hidden",
+      backgroundColor: '#BCDCC9',
+      borderWidth: 3,
+      borderColor: '#fff',
+      borderRadius: 50,
     },
   touchableLeft: {}, // TODO
-  touchableRight: {} // TODO
+  touchableRight: {
+
+  } // TODO
   });
