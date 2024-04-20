@@ -1,3 +1,6 @@
+import { StatusBar } from 'expo-status-bar';
+import {Button, StyleSheet, Text, View} from 'react-native';
+import {Users} from "./backend/api/users";
 import * as React from 'react';
 // import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 import Test from './src/test'
@@ -16,9 +19,6 @@ import { Button } from 'react-native-paper';
 //   },
 // };
 
-
-
-
 export default function App() {
   return (
     <PaperProvider theme={theme}>
@@ -29,8 +29,6 @@ export default function App() {
         <Button icon="camera" mode="contained">
           Press Me!
         </Button>
-        
-
       </View>
     </PaperProvider>
   );
