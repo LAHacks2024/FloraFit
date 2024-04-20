@@ -1,29 +1,26 @@
-import { StatusBar } from 'expo-status-bar';
-import {Button, StyleSheet, Text, View} from 'react-native';
-import {Users} from "./backend/api/users";
 import * as React from 'react';
 // import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
 import Test from './src/test'
 import { AppRegistry, View } from 'react-native';
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
-import {name as appName} from './app.json'
+import {expo as appName} from './app.json'
 import { Button } from 'react-native-paper';
 
 
-// const theme = {
-//   ...DefaultTheme,
-//   colors: {
-//     ...DefaultTheme.colors,
-//     primary: 'tomato',
-//     secondary: 'yellow',
-//   },
-// };
+const theme = {
+  ...DefaultTheme,
+  colors: {
+    ...DefaultTheme.colors,
+    primary: 'tomato',
+    secondary: 'yellow',
+  },
+};
 
 export default function App() {
   return (
     <PaperProvider theme={theme}>
-      <View 
-      style={{justifyContent:'center', flex:1}} 
+      <View
+        style={{justifyContent:'center', flex:1}}
       >
         <Test />
         <Button icon="camera" mode="contained">
@@ -34,5 +31,5 @@ export default function App() {
   );
 }
 
-AppRegistry.registerComponent(appName, () => App);
+AppRegistry.registerComponent(appName.name, () => App);
 
