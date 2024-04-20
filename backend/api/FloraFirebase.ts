@@ -11,11 +11,10 @@ import {
   where,
   QueryFieldFilterConstraint,
   getDocs,
-  updateDoc
+  updateDoc,
+  WhereFilterOp
 } from "firebase/firestore";
 import {FIRESTORE} from "../environments";
-import firebase from "firebase/compat";
-import WhereFilterOp = firebase.firestore.WhereFilterOp;
 
 export interface CreateOptions {
   overrideId?: string;
@@ -40,19 +39,18 @@ export class FloraFirebase<F, P> {
       id: '',
       createdAt: serverTimestamp(),
       updatedAt: serverTimestamp(),
+      ...data
     }
 
     if (extras && extras.overrideId) {
       const docWithId = doc(FIRESTORE, this.collection, extras.overrideId);
 
       dataWithExtras.id = extras.overrideId;
-      await setDoc(docWithId, {
-        ...dataWithExtras,
-        ...data,
-      });
+      await setDoc(docWithId, dataWithExtras);
     } else {
       // Adds the document
       const tempId = await addDoc(dbRef, dataWithExtras);
+      id = tempId.id;
       // Updates the document setting the ID same as Doc ID
       dataWithExtras = {...dataWithExtras, id: tempId.id};
       await updateDoc(tempId, dataWithExtras);
@@ -76,6 +74,14 @@ export class FloraFirebase<F, P> {
     }
 
     return docSnap.data() as F;
+  }
+
+  async getAll(): Promise<F[]> {
+    const docRef = collection(FIRESTORE, this.collection);
+    const docs = await getDocs(docRef);
+    const dataArr: F[] = [];
+    docs.forEach(d => dataArr.push(d.data() as F))
+    return dataArr;
   }
 
   async getWhere(queries: [string, WhereFilterOp, string][]): Promise<F[]> {

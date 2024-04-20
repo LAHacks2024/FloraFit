@@ -2,8 +2,6 @@ import { createUserWithEmailAndPassword, signInWithEmailAndPassword } from "fire
 import {User, UserDTO} from "../entities/user.model";
 import {AUTH} from "../environments";
 import {FloraFirebase} from "./FloraFirebase";
-import firebase from "firebase/compat";
-import UserCredential = firebase.auth.UserCredential;
 
 
 export class Users extends FloraFirebase<User, UserDTO>{
