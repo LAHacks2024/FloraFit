@@ -18,7 +18,6 @@
       "supportsTablet": true,
       "ios.bundleIdentifier": "com.flora-fit.flora-fit",
       "ios.config.googleMapsApiKey": "AIzaSyBBxAQdWkbXtx2_DnNpYyuoJa-hboH1BQc"
-      
     },
     "android": {
       "adaptiveIcon": {
@@ -26,9 +25,16 @@
         "backgroundColor": "#ffffff"
       }
     },
-
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "plugins": [
+      [
+        "expo-font",
+        {
+          "fonts": ["assets/fonts/DMSans-VariableFont_opsz,wght.ttf"]
+        }
+      ]
+    ]
   }
 }
