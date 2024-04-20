@@ -11,10 +11,13 @@ export default function Settings({navigation}) {
   };
 
   const handleLogOut = async () => {
-    // Log out the user
     await AUTH.signOut();
     navigation.navigate('Landing');
   }
+
+  const handleSoleMate = () => {
+    navigation.navigate('ChangeSole');
+  };
 
   return (
     <Layout>
@@ -32,7 +35,7 @@ export default function Settings({navigation}) {
       </View>
 
       <View style={styles.options}>
-        <TouchableOpacity style={globalStyles.optionButton}>
+        <TouchableOpacity onPress={handleSoleMate} style={globalStyles.optionButton}>
           <Text style={globalStyles.optionButtonText}>Change Sole Mate</Text>
         </TouchableOpacity>
 

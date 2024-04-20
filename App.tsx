@@ -14,6 +14,7 @@ import LogInPage from './src/loginpage/loginpage';
 import { useFonts } from 'expo-font';
 import Greenhouse from './src/greenhouse/greenhouse';
 import Settings from './src/settings/settings';
+import ChangeSole from "./src/changeSole/changeSole.tsx";
 
 const Stack = createStackNavigator();
 
@@ -38,6 +39,9 @@ export default function App() {
         <Stack.Screen name="StopJournaling" component={StopJournaling} />
         <Stack.Screen name="LogInPage" component={LogInPage} />
         <Stack.Screen name={"Settings"} component={Settings} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name={"ChangeSole"} component={ChangeSole} options={{
           headerShown: false
         }} />
         <Stack.Screen name="Greenhouse" component={Greenhouse} />
