@@ -1,14 +1,10 @@
 import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react-native';
-import { styles } from './style.tsx';
-
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
 import React from 'react';
+import {styles} from "./style";
 
 
-export default function Stop({route}) {
-   const navigation = useNavigation();
-
+export default function Stop({route, navigation}) {
    const navigateToHome = () => {
       navigation.navigate('Home');
    };

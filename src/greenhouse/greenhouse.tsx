@@ -1,18 +1,11 @@
 import { StyleSheet, Text, View, Image, ImageBackground, TouchableOpacity } from 'react-native';
-import { styles } from './style.tsx';
-import Svg, { Circle, Rect } from 'react-native-svg';
-import { Foreground } from "./../../assets/greenhouse.svg";
-import SVGImage from 'react-native-svg-image';
 
 
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
+import {styles} from "./style";
 
 
-export default function Greenhouse() {
-
-  const navigation = useNavigation();
-
+export default function Greenhouse({navigation}) {
 
   const navigateToGreenHouse = () => {
      navigation.navigate('Journal');

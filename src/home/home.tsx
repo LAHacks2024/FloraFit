@@ -1,32 +1,21 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE}  from 'react-native-maps';
-import { styles } from './style.tsx';
 import {LocationObject, requestForegroundPermissionsAsync, getCurrentPositionAsync, watchPositionAsync, LocationAccuracy } from 'expo-location';
 import { useEffect, useRef, useState } from 'react';
 import React from 'react';
 import { Image } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import {styles} from "./style";
 
-export default function Map() {
-   /**
-    * FOR PLACES API:
-    * https://reactnative.dev/docs/network
-    * https://developers.google.com/maps/documentation/places/web-service/search-nearby#maps_http_places_nearbysearch-txt 
-    * (^^ CTRL + F for examples)
-    * 
-    */
-
+export default function Map({navigation}) {
 
    const [location, setLocation] = useState<LocationObject | null>(null);
    const timeAppOpened = new Date();
    const mapRef = useRef<MapView>(null);
-   const navigation = useNavigation();
 
    const navigateToStop = (stopName: string, location: string) => {
       navigation.navigate('Stop', {
          stopName: 'natural bridges',
-         location: 'santa cruz'
+         location: 'santa cruz',
       });
    };
 

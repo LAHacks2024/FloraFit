@@ -33,5 +33,6 @@ export const styles = StyleSheet.create({
       left: '10%',
       width: '100%',
       alignSelf: "center",
-    }
+    },
+    text: {},
   });

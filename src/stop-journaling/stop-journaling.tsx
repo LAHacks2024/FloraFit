@@ -1,8 +1,8 @@
 import { StyleSheet, Text, View, Image, TextInput, SafeAreaView, ScrollView } from 'react-native';
-import { styles } from './style.tsx';
 import { GoogleGenerativeAI } from "@google/generative-ai";
 
 import React, { useEffect, useState } from 'react';
+import {styles} from "./style";
 
 
 export default function StopJournaling({ route }) {
@@ -10,7 +10,7 @@ export default function StopJournaling({ route }) {
    const city = route.params.city; //route params
 
    const [loading, setLoading] = useState(false);
-   const [apiData, setApiData] = useState([]);
+   const [apiData, setApiData] = useState<string>();
    const [value, onChangeText] = useState('Type your response for your journal here for your personal reflection.');
    const [text, setText] = useState([]);
    const genAI = new GoogleGenerativeAI(
@@ -31,41 +31,42 @@ export default function StopJournaling({ route }) {
       fetchData();
     }, [text]);
 
-    return (
-      <View style={styles.container}>
-        <Text>Hi</Text>
+  return (
+    <View style={styles.container}>
+      <Text>Hi</Text>
+      <View>
+        <Image source={require('../../assets/avatars/dino-buddy.png')}
+               style={{height: 90, width: 90, resizeMode: 'contain'}}/>
+        <Image/>
+
         <View>
-         <Image source={require('../../assets/avatars/dino-buddy.png')} style={{height: 90, width:90, resizeMode: 'contain'}} />
-         <Image/>
-
-         <View>
-            {!loading && <Text>{apiData}</Text>}
-            {loading && <Text>Loading...</Text>}
-         </View>
-
-         <ScrollView>
-         <SafeAreaView
-         style={{
-         backgroundColor: value,
-         borderBottomColor: '#000000',
-         borderBottomWidth: 1,
-         }}>
-         <TextInput
-         editable
-         multiline
-         numberOfLines={4}
-         maxLength={40}
-         onChangeText={text => onChangeText(text)}
-         value={value}
-         style={{padding: 10}}
-         />
-      </SafeAreaView>
-            
-         </ScrollView>
-
+          {!loading && <Text>{apiData}</Text>}
+          {loading && <Text>Loading...</Text>}
         </View>
+
+        <ScrollView>
+          <SafeAreaView
+            style={{
+              backgroundColor: value,
+              borderBottomColor: '#000000',
+              borderBottomWidth: 1,
+            }}>
+            <TextInput
+              editable
+              multiline
+              numberOfLines={4}
+              maxLength={40}
+              onChangeText={text => onChangeText(text)}
+              value={value}
+              style={{padding: 10}}
+            />
+          </SafeAreaView>
+
+        </ScrollView>
+
       </View>
-    );
+    </View>
+  );
 
 
 }
