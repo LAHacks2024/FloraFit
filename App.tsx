@@ -28,7 +28,7 @@ export default function App() {
   
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Stop">
+      <Stack.Navigator initialRouteName="Landing">
         <Stack.Screen name="Home" component={Map} />
         <Stack.Screen name="Landing" component={Landing} />
         <Stack.Screen name="Stop" component={Stop} />

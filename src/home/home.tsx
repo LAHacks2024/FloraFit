@@ -6,12 +6,27 @@ import {LocationObject, requestForegroundPermissionsAsync, getCurrentPositionAsy
 import { useEffect, useRef, useState } from 'react';
 import React from 'react';
 import { Image } from 'react-native';
-
+import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
 export default function Map() {
 
    const [location, setLocation] = useState<LocationObject | null>(null);
    const mapRef = useRef<MapView>(null);
+   const navigation = useNavigation();
+
+   const navigateToStop = (stopName: string, location: string) => {
+      navigation.navigate('Stop', {
+         stopName: 'natural bridges',
+         location: 'santa cruz'
+      });
+   };
+
+   const navigateToGreenHouse = () => {
+      navigation.navigate('Stop', {
+         stopName: 'natural bridges',
+         location: 'santa cruz'
+      });
+   };
 
    async function requestLocationPermission() { 
       const {granted} = await requestForegroundPermissionsAsync();
@@ -62,13 +77,33 @@ export default function Map() {
 
             </Marker>
 
+            {/** Hard-coded marker for testing redirecting */}
+            <Marker 
+               coordinate={{
+                  latitude: location ? location?.coords.latitude + .0001 : 2,
+                  longitude: location ? location?.coords.longitude + .0001: 2,
+               }}
+               onPress={() => navigateToStop('bleh', 'bleh')}
+            >
+               <Image source={require('../../assets/markers/stop-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
+
+            </Marker>
+
          </MapView>
-         <TouchableOpacity
-            onPress={() => console.log("press")}
-            style={[styles.touchable]}
-         >
-            <Text>Press Me 2</Text>
-         </TouchableOpacity>
+         <View style={styles.bottomRow}>
+            <TouchableOpacity
+               style={styles.touchableLeft}
+               onPress={() => console.log("press")}
+            > 
+               <Image source={require('../../assets/buttons/greenhouse.png')} style={{height: 66, width: 66}}/>
+            </TouchableOpacity>
+            <TouchableOpacity
+               style={styles.touchableRight}
+               onPress={() => console.log("press")}
+            > 
+               <Image source={require('../../assets/buttons/ellipse.png')} style={{height: 66, width: 66}}/>
+            </TouchableOpacity>
+         </View>
       </View>
     );
 

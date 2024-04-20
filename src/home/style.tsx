@@ -19,16 +19,18 @@ export const styles = StyleSheet.create({
     bottomRow: {
       flex: 1,
       height: 80,
+      bottom: 20,
+      width: '100%',
       flexDirection:'row',
       position:'absolute',
       alignSelf: "center",
-      justifyContent: "space-between",
+      justifyContent: "space-around",
       backgroundColor: "transparent",
       borderWidth: 0.5,
       borderRadius: 20
     },
     touchable: {
-      height: 20,
+      height: 70,
     }
 
 
