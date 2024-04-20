@@ -9,8 +9,18 @@ import { Image } from 'react-native';
 import { NavigationContainer, useNavigation } from '@react-navigation/native';
 
 export default function Map() {
+   /**
+    * FOR PLACES API:
+    * https://reactnative.dev/docs/network
+    * https://developers.google.com/maps/documentation/places/web-service/search-nearby#maps_http_places_nearbysearch-txt 
+    * (^^ CTRL + F for examples)
+    * 
+    */
+
 
    const [location, setLocation] = useState<LocationObject | null>(null);
+   const [initialLocation, setInitialLocation] = useState<LocationObject | null>(null);
+   const timeAppOpened = new Date();
    const mapRef = useRef<MapView>(null);
    const navigation = useNavigation();
 
@@ -43,14 +53,46 @@ export default function Map() {
    useEffect(()=> {
       watchPositionAsync({
         accuracy: LocationAccuracy.Highest, 
-        timeInterval: 1000,
+        timeInterval: 3000,
         distanceInterval: 1,
       }, (response) => {
-          setLocation(response);
-          mapRef.current?.animateCamera({
-            pitch: 70,
-            center: response.coords
-          })
+            // update and check for distance travelled if one of the following is true
+            // (1) app loads - in which case, set initial location
+            // (2) user has travelled a sufficient distance since they opened the app, in which case, update initial location and stops displayed.
+            // otherwise, merely update current location (no step refreshes)
+            if (!initialLocation) {
+               setInitialLocation(location);
+            } else if (initialLocation && (Math.abs(initialLocation.coords.latitude -  response.coords.latitude)  > 1 || Math.abs(initialLocation.coords.longitude -  response.coords.longitude) > 1)){
+               setInitialLocation(location);
+               // get new stops
+               /**
+                * URL for us: https://maps.googleapis.com/maps/api/place/nearbysearch/json
+                              ?keyword=cruise
+                              &location=-33.8670522%2C151.1957362
+                              &radius=1500
+                              &type=restaurant
+                              &key=YOUR_API_KEY
+                * EXAMPLE OF ENDPOINT CALL
+                * 
+               fetch('https://mywebsite.com/endpoint/', {
+                  method: 'POST',
+                  headers: {
+                     Accept: 'application/json',
+                     'Content-Type': 'application/json',
+                  },
+                  body: JSON.stringify({
+                     firstParam: 'yourValue',
+                     secondParam: 'yourOtherValue',
+                  }),
+               });
+               */
+            }
+            setLocation(response);
+            mapRef.current?.animateCamera({
+               pitch: 70,
+               center: response.coords
+            });
+
       })
     }, [])
 
