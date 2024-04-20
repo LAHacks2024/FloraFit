@@ -5,14 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="718177f3-5574-493c-a522-b892440562b2" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/backend/api/FloraFirebase.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/api/users.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/entities/general.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/entities/user.model.ts" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/backend/environments.ts" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.js" beforeDir="false" afterPath="$PROJECT_DIR$/App.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -65,7 +58,7 @@
       <option name="presentableId" value="Default" />
       <updated>1713580855506</updated>
       <workItem from="1713580856619" duration="2742000" />
-      <workItem from="1713583620218" duration="883000" />
+      <workItem from="1713583620218" duration="1502000" />
     </task>
     <servers />
   </component>

@@ -7,10 +7,6 @@ export default function App() {
     <View style={styles.container}>
       <Text>Open up App.js to start working on your app!</Text>
       <StatusBar style="auto" />
-      <Button title="GAH   " onPress={async () => {
-          console.log('Click me')
-        await new Users().createUser('josmchavz@gmail.com', 'test123?!');
-      }} />
     </View>
   );
 }
