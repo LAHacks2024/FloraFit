@@ -6,7 +6,7 @@ import { NavigationContainer, useNavigation } from '@react-navigation/native';
 import React from 'react';
 
 
-export default function Stop() {
+export default function Stop({route}) {
    const navigation = useNavigation();
 
    const navigateToHome = () => {
@@ -15,7 +15,8 @@ export default function Stop() {
 
    const navigateToStopJournaling = (stopName: string) => {
       navigation.navigate('StopJournaling', {
-         stopName: 'natural bridges'
+         stopName: 'natural bridges',
+         city: 'santa cruz'
       });
    };
 
