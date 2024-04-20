@@ -13,18 +13,6 @@ import StopJournaling from './src/stop-journaling/stop-journaling';
 import Greenhouse from './src/greenhouse/greenhouse';
 
 
-// const theme = {
-//   ...DefaultTheme,
-//   colors: {
-//     ...DefaultTheme.colors,
-//     primary: 'tomato',
-//     secondary: 'yellow',
-//   },
-// };
-
-const Stack = createStackNavigator();
-
-
 export default function App() {
   
   return (
@@ -41,5 +29,4 @@ export default function App() {
   );
     
 }
-
 
