@@ -56,7 +56,7 @@ export default function Map() {
         distanceInterval: 10, /** 10 meters walked, update position */
       }, (response) => {
             console.log('hi', response.coords.latitude, response.coords.longitude)
-            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=500&type=university&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
+            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=500&type=park&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
                .then(response => response.json())
                .then(json => {
                  console.log(json.results)
