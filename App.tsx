@@ -12,18 +12,6 @@ import Stop from './src/stop/stop';
 import StopJournaling from './src/stop-journaling/stop-journaling';
 
 
-// const theme = {
-//   ...DefaultTheme,
-//   colors: {
-//     ...DefaultTheme.colors,
-//     primary: 'tomato',
-//     secondary: 'yellow',
-//   },
-// };
-
-const Stack = createStackNavigator();
-
-
 export default function App() {
   
   return (
@@ -39,5 +27,4 @@ export default function App() {
   );
     
 }
-
 
