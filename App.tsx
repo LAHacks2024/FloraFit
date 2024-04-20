@@ -8,6 +8,8 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import Map from './src/home/home';
 import Landing from './src/landing/landing';
+import Stop from './src/stop/stop';
+import StopJournaling from './src/stop-journaling/stop-journaling';
 
 
 // const theme = {
@@ -26,9 +28,11 @@ export default function App() {
   
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Home">
+      <Stack.Navigator initialRouteName="Stop">
         <Stack.Screen name="Home" component={Map} />
         <Stack.Screen name="Landing" component={Landing} />
+        <Stack.Screen name="Stop" component={Stop} />
+        <Stack.Screen name="StopJournaling" component={StopJournaling} />
       </Stack.Navigator>
 
     </NavigationContainer>
