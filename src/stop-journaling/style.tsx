@@ -15,6 +15,7 @@ export const styles = StyleSheet.create({
       paddingVertical: 35,
       backgroundColor: '#fff',
       flex: 1,
+      marginBottom: 25,
       borderRadius: 15,
     },
     question: {
@@ -25,10 +26,20 @@ export const styles = StyleSheet.create({
     textInput:{
       marginTop: 25,
       borderBottomWidth: 0,
-      backgroundColor: '#fff',
       paddingHorizontal: 0,
       paddingVertical: 15,
       borderWidth: 0,
+      height: '100%',
       flex: 1,
     },
+    submitButton: {
+      backgroundColor: '#2A3779',
+      marginHorizontal: 25,
+      marginBottom: 35,
+      borderRadius: 15,
+    },
+    buttonText: {
+      fontWeight: "bold",
+      fontSize: 15,
+    }
   });

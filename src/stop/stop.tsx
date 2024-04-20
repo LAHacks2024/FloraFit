@@ -4,6 +4,7 @@ import React from 'react';
 import {styles} from "./style";
 import {Button} from "react-native-paper";
 import {globalStyles} from "../globalStyles";
+import Layout from "../layout.tsx";
 
 
 export default function Stop({route, navigation}) {
@@ -19,7 +20,7 @@ export default function Stop({route, navigation}) {
    };
 
     return (
-      <View style={styles.container}>
+      <Layout>
          <View style={globalStyles.header}>
            <Button style={globalStyles.backButton} icon={"arrow-left-bold-circle"}
              onPress={() =>
@@ -63,7 +64,7 @@ export default function Stop({route, navigation}) {
          {/*      >*/}
          {/*         <Text>{'Use item at this stop'}</Text>*/}
          {/*</TouchableOpacity>*/}
-      </View>
+      </Layout>
     );
 
 

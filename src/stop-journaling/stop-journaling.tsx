@@ -1,22 +1,61 @@
-import {StyleSheet, Text, View, Image, SafeAreaView, ScrollView, TextInput} from 'react-native';
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import {Image, SafeAreaView, ScrollView, Text, TextInput, View} from 'react-native';
+import {GoogleGenerativeAI} from "@google/generative-ai";
 
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {styles} from "./style";
 import {globalStyles} from "../globalStyles";
-import {Button} from "react-native-paper";
+import {Banner, Button} from "react-native-paper";
+import Layout from "../layout.tsx";
+import {UserJournal} from "../../backend/api/userJournal.ts";
+import {UserJournalDTO} from "../../backend/entities/UserJournal.entity.ts";
+import {AUTH} from "../../backend/environments.ts";
+import {UserPlants} from "../../backend/api/userPlants.ts";
+import {PlantStage, UserPlantDTO} from "../../backend/entities/UserPlant.model.ts";
 
 
 export default function StopJournaling({ route, navigation }) {
    const stopName = route.params.stopName; //route params
    const city = route.params.city; //route params
 
+  const [hasError, setHasError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('')
    const [loading, setLoading] = useState(false);
-   const [apiData, setApiData] = useState<string>();
+   const [question, setQuestion] = useState<string>();
    const [value, onChangeText] = useState<string>('');
    const genAI = new GoogleGenerativeAI(
      "AIzaSyAt2C4Ppu9sl4ZNcqtwTyRt7ZfFVBzftwo"
    );
+
+   const onSubmit = async () => {
+     if (value.length < 50) {
+       setErrorMessage('Please have more than 50 characters');
+       setHasError(true);
+       return;
+     }
+
+     setHasError(false);
+     setErrorMessage('');
+
+     const journal = new UserJournal();
+     const journalData: UserJournalDTO = {
+       userId: AUTH.currentUser.uid,
+       prompt: question,
+       response: value,
+     }
+
+     await journal.create(journalData);
+
+     const userPlant = new UserPlants();
+     const plant: UserPlantDTO = {
+       userId: AUTH.currentUser.uid,
+       plantId: 'WyQ7oPOi3M0bge42bRa4', // TODO: Remove the static
+       stage: PlantStage.FIRST,
+       currentStepCount: 0,
+     };
+     await userPlant.create(plant);
+
+     await navigation.goBack();
+   }
 
    useEffect(() => {
      const fetchData = async () => {
@@ -25,7 +64,7 @@ export default function StopJournaling({ route, navigation }) {
        const result = await model.generateContent(prompt);
        const response = result.response;
        const text = response.text();
-       setApiData(text);
+       setQuestion(text);
        setLoading(false);
      };
 
@@ -33,7 +72,10 @@ export default function StopJournaling({ route, navigation }) {
     }, []);
 
   return (
-    <View style={styles.container}>
+    <Layout>
+      <Banner actions={[]} visible={hasError}>
+        {errorMessage}
+      </Banner>
       <View style={globalStyles.header}>
         <Button style={globalStyles.backButton} icon={"arrow-left-bold-circle"}
                 onPress={() =>
@@ -53,7 +95,7 @@ export default function StopJournaling({ route, navigation }) {
 
       <View style={styles.content}>
         <View style={styles.question}>
-          {!loading && <Text>{apiData}</Text>}
+          {!loading && <Text>{question}</Text>}
           {loading && <Text>Loading...</Text>}
         </View>
 
@@ -67,8 +109,6 @@ export default function StopJournaling({ route, navigation }) {
             <TextInput
               editable
               multiline
-              numberOfLines={4}
-              maxLength={40}
               onChangeText={onChangeText}
               value={value}
               placeholder={"Type your response for your journal here for your personal reflection."}
@@ -76,11 +116,24 @@ export default function StopJournaling({ route, navigation }) {
               placeholderTextColor={'#989898'}
             />
           </SafeAreaView>
-
         </ScrollView>
-
+        <Image
+          style={{
+            // height: 96,
+            // width: 112,
+            position: "absolute",
+            bottom: -20,
+            zIndex: 2,
+            right: -20,
+          }}
+          source={require('../../assets/avatars/journal-avatar.png')}
+        ></Image>
       </View>
-    </View>
+
+      <Button contentStyle={{ paddingVertical: 15, }} onPress={onSubmit} textColor={'#fff'} style={styles.submitButton}>
+        <Text style={styles.buttonText}>finished!</Text>
+      </Button>
+    </Layout>
   );
 
 

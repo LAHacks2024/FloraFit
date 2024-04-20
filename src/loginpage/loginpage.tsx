@@ -49,6 +49,7 @@ export default function LogInPage({navigation}) {
             <TextInput
             label='Email'
             value={email}
+            autoCapitalize={"none"}
             onChangeText={(text)=>setEmail(text)}
             ></TextInput>
           </View>
@@ -61,6 +62,8 @@ export default function LogInPage({navigation}) {
           }}>
             <TextInput
             label='Password'
+            secureTextEntry={true}
+            autoCapitalize={"none"}
             value={password}
             onChangeText={(text)=>setPassword(text)}
             ></TextInput>
