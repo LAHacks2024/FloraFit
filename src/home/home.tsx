@@ -19,7 +19,6 @@ export default function Map() {
 
 
    const [location, setLocation] = useState<LocationObject | null>(null);
-   const [initialLocation, setInitialLocation] = useState<LocationObject | null>(null);
    const timeAppOpened = new Date();
    const mapRef = useRef<MapView>(null);
    const navigation = useNavigation();
@@ -53,17 +52,32 @@ export default function Map() {
    useEffect(()=> {
       watchPositionAsync({
         accuracy: LocationAccuracy.Highest, 
-        timeInterval: 3000,
-        distanceInterval: 1,
+        // timeInterval: 3000, /** apparently this is android only */
+        distanceInterval: 10, /** 10 meters walked, update position */
       }, (response) => {
+            console.log('hi', response.coords.latitude, response.coords.longitude)
+            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=500&type=university&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
+               .then(response => response.json())
+               .then(json => {
+                 console.log(json.results)
+               })
+               .catch(error => {
+                 console.error(error);
+            });
             // update and check for distance travelled if one of the following is true
             // (1) app loads - in which case, set initial location
             // (2) user has travelled a sufficient distance since they opened the app, in which case, update initial location and stops displayed.
             // otherwise, merely update current location (no step refreshes)
-            if (!initialLocation) {
-               setInitialLocation(location);
-            } else if (initialLocation && (Math.abs(initialLocation.coords.latitude -  response.coords.latitude)  > 1 || Math.abs(initialLocation.coords.longitude -  response.coords.longitude) > 1)){
-               setInitialLocation(location);
+               /**
+                *                fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cruise&location=${response.coords.latitude},${response.coords.longitude}&radius=70000&type=university&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
+               .then(response => response.json())
+               .then(json => {
+                 console.log(json)
+               })
+               .catch(error => {
+                 console.error(error);
+               });
+                */
                // get new stops
                /**
                 * URL for us: https://maps.googleapis.com/maps/api/place/nearbysearch/json
@@ -86,7 +100,6 @@ export default function Map() {
                   }),
                });
                */
-            }
             setLocation(response);
             mapRef.current?.animateCamera({
                pitch: 70,
