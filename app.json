@@ -15,7 +15,10 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "ios.bundleIdentifier": "com.flora-fit.flora-fit",
+      "ios.config.googleMapsApiKey": "AIzaSyBBxAQdWkbXtx2_DnNpYyuoJa-hboH1BQc"
+      
     },
     "android": {
       "adaptiveIcon": {
@@ -23,6 +26,7 @@
         "backgroundColor": "#ffffff"
       }
     },
+
     "web": {
       "favicon": "./assets/favicon.png"
     }

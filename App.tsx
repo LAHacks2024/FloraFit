@@ -3,8 +3,11 @@ import * as React from 'react';
 import Test from './src/test'
 import { AppRegistry, View } from 'react-native';
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
-import {name as appName} from './app.json'
 import { Button } from 'react-native-paper';
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Map from './src/home/home';
+import Landing from './src/landing/landing';
 
 
 // const theme = {
@@ -16,25 +19,21 @@ import { Button } from 'react-native-paper';
 //   },
 // };
 
-
+const Stack = createStackNavigator();
 
 
 export default function App() {
+  
   return (
-    <PaperProvider theme={theme}>
-      <View 
-      style={{justifyContent:'center', flex:1}} 
-      >
-        <Test />
-        <Button icon="camera" mode="contained">
-          Press Me!
-        </Button>
-        
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Home">
+        <Stack.Screen name="Home" component={Map} />
+        <Stack.Screen name="Landing" component={Landing} />
+      </Stack.Navigator>
 
-      </View>
-    </PaperProvider>
+    </NavigationContainer>
   );
+    
 }
 
-AppRegistry.registerComponent(appName, () => App);
 
