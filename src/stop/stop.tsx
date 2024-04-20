@@ -2,6 +2,8 @@ import { StyleSheet, Text, View, Image, TouchableOpacity, FlatList } from 'react
 
 import React from 'react';
 import {styles} from "./style";
+import {Button} from "react-native-paper";
+import {globalStyles} from "../globalStyles";
 
 
 export default function Stop({route, navigation}) {
@@ -18,65 +20,49 @@ export default function Stop({route, navigation}) {
 
     return (
       <View style={styles.container}>
-         <View>
-            <View>
-               <TouchableOpacity
-                  onPress={() =>
-                     navigateToHome()
-                  }
-               >
-                  <Text>Back</Text>
-               </TouchableOpacity>
-
-            </View>
-            <View>
-               <View>
+         <View style={globalStyles.header}>
+           <Button style={globalStyles.backButton} icon={"arrow-left-bold-circle"}
+             onPress={() =>
+               navigateToHome()
+             }
+           >
+             <></>
+           </Button>
+            <View style={globalStyles.headerCell}>
+               <View style={globalStyles.headerInnerCell}>
                   <Image source={require('../../assets/markers/marker-bw.png')} style={{width: 28, height: 28}}></Image>
-                  <Text>Root Route</Text>
+                  <Text style={globalStyles.headerInnerCellHeader}>Root Route</Text>
                </View>
-               <Text>natural bridges beach</Text>
+               <Text style={globalStyles.headerCellText}>natural bridges beach</Text>
             </View>
          </View>
-         <Image source={require('../../assets/natural-bridges.png')}/>
-         <TouchableOpacity
-                  onPress={() =>
-                     navigateToStopJournaling('natural bridges')
-                  }
-               >
-                  <Text>{'Write a journal entry for this stop'}</Text>
-         </TouchableOpacity>
-         <TouchableOpacity
-                  onPress={() =>
-                     navigateToStopJournaling('natural bridges')
-                  }
-               >
-                  <Text>{'See who else has visited this stop'}</Text>
-         </TouchableOpacity>
-         <TouchableOpacity
-                  onPress={() =>
-                     navigateToStopJournaling('natural bridges')
-                  }
-               >
-                  <Text>{'Use item at this stop'}</Text>
-         </TouchableOpacity>
-         
-         {
-            /**
-             <FlatList
-            data={['Write a journal entry for this stop', 'See who else has visited this stop', 'Use item at this stop']}
-            renderItem={({ item, index }) => (
-               <TouchableOpacity
-                  onPress={() =>
-                     navigateToStopJournaling('natural bridges')
-                  }
-               >
-                  <Text>{item}</Text>
-               </TouchableOpacity>
-            )}
-         />
-             */
-           
-}
+
+         <View style={globalStyles.content}>
+           <Image style={styles.mainImage} source={require('../../assets/natural-bridges.png')}/>
+
+           <TouchableOpacity
+             onPress={() =>
+               navigateToStopJournaling('natural bridges')
+             }
+             style={styles.button}
+           >
+             <Text>{'Write a journal entry for this stop'}</Text>
+           </TouchableOpacity>
+         </View>
+         {/*<TouchableOpacity*/}
+         {/*         onPress={() =>*/}
+         {/*            navigateToStopJournaling('natural bridges')*/}
+         {/*         }*/}
+         {/*      >*/}
+         {/*         <Text>{'See who else has visited this stop'}</Text>*/}
+         {/*</TouchableOpacity>*/}
+         {/*<TouchableOpacity*/}
+         {/*         onPress={() =>*/}
+         {/*            navigateToStopJournaling('natural bridges')*/}
+         {/*         }*/}
+         {/*      >*/}
+         {/*         <Text>{'Use item at this stop'}</Text>*/}
+         {/*</TouchableOpacity>*/}
       </View>
     );
 

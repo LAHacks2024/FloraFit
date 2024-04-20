@@ -5,17 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="718177f3-5574-493c-a522-b892440562b2" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/src/globalStyles.ts" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/App.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/App.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package-lock.json" beforeDir="false" afterPath="$PROJECT_DIR$/package-lock.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/package.json" beforeDir="false" afterPath="$PROJECT_DIR$/package.json" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/greenhouse/greenhouse.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/greenhouse/greenhouse.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/greenhouse/style.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/greenhouse/style.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/home/home.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/home/home.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/home/style.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/home/style.tsx" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/landing/landing.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/landing/landing.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/stop-journaling/stop-journaling.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stop-journaling/stop-journaling.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stop-journaling/style.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stop-journaling/style.tsx" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/stop/stop.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stop/stop.tsx" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/stop/style.tsx" beforeDir="false" afterPath="$PROJECT_DIR$/src/stop/style.tsx" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -36,7 +31,7 @@
   <component name="PropertiesComponent"><![CDATA[{
   "keyToString": {
     "RunOnceActivity.ShowReadmeOnStart": "true",
-    "git-widget-placeholder": "main",
+    "git-widget-placeholder": "journaling-flow",
     "last_opened_file_path": "/Users/tatsu/Github/FloraFit",
     "node.js.detected.package.eslint": "true",
     "node.js.detected.package.tslint": "true",
