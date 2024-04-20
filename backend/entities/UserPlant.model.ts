@@ -2,6 +2,7 @@ import {GeneralModel} from "./general.model";
 
 export interface UserPlantDTO {
   userId: string;
+  plantId: string;
   stage: PlantStage;
   currentStepCount: number;
 }
