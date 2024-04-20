@@ -11,5 +11,17 @@ export const styles = StyleSheet.create({
     map: {
       flex: 1,
       width: '100%'
+    },
+    login_and_signup_button: {
+      borderRadius: 10,
+      backgroundColor: '#2A3779',
+      padding:10
+    },
+    button_text: {
+      fontWeight: 'bold',
+      fontFamily: 'DMSans',
+      alignContent: 'center',
+      color:'white'
     }
+
   });
