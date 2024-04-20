@@ -3,34 +3,28 @@ import * as React from 'react';
 import Test from './src/test'
 import { AppRegistry, View } from 'react-native';
 import { MD3LightTheme as DefaultTheme, PaperProvider } from 'react-native-paper';
-import {expo as appName} from './app.json'
 import { Button } from 'react-native-paper';
-import {Users} from "./backend/api/users";
-import {AUTH} from "./backend/environments";
-import {Plants} from "./backend/api/plants";
-import {PlantDTO} from "./backend/entities/plant.model";
+import { NavigationContainer } from '@react-navigation/native';
+import { createStackNavigator } from '@react-navigation/stack';
+import Map from './src/home/home';
+import Landing from './src/landing/landing';
+import Stop from './src/stop/stop';
+import StopJournaling from './src/stop-journaling/stop-journaling';
 
-
-const theme = {
-  ...DefaultTheme,
-  colors: {
-    ...DefaultTheme.colors,
-    primary: 'tomato',
-    secondary: 'yellow',
-  },
-};
 
 export default function App() {
+  
   return (
-    <PaperProvider theme={theme}>
-      <View
-        style={{justifyContent:'center', flex:1}}
-      >
-        <Test />
-      </View>
-    </PaperProvider>
-  );
-}
+    <NavigationContainer>
+      <Stack.Navigator initialRouteName="Landing">
+        <Stack.Screen name="Home" component={Map} />
+        <Stack.Screen name="Landing" component={Landing} />
+        <Stack.Screen name="Stop" component={Stop} />
+        <Stack.Screen name="StopJournaling" component={StopJournaling} />
+      </Stack.Navigator>
 
-AppRegistry.registerComponent(appName.name, () => App);
+    </NavigationContainer>
+  );
+    
+}
 
