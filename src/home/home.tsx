@@ -1,23 +1,34 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { TouchableOpacity, View } from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE}  from 'react-native-maps';
-import { styles } from './style.tsx';
 import {LocationObject, requestForegroundPermissionsAsync, getCurrentPositionAsync, watchPositionAsync, LocationAccuracy } from 'expo-location';
 import { useEffect, useRef, useState } from 'react';
 import React from 'react';
 import { Image } from 'react-native';
-import { NavigationContainer, useNavigation } from '@react-navigation/native';
+import {styles} from "./style";
 
-export default function Map() {
+// type RootStackParamList = {
+//   Stop: {
+//     stopName: string,
+//     location: string,
+//   },
+//   Home: {}
+// };
+//
+// type HomeProps = {
+//   route: RouteProp<RootStackParamList, 'Home'>;
+//   navigation: StackNavigationProp<RootStackParamList>;
+// };
+
+
+export default function Map({navigation}) {
 
    const [location, setLocation] = useState<LocationObject | null>(null);
    const mapRef = useRef<MapView>(null);
-   const navigation = useNavigation();
 
    const navigateToStop = (stopName: string, location: string) => {
       navigation.navigate('Stop', {
          stopName: 'natural bridges',
-         location: 'santa cruz'
+         location: 'santa cruz',
       });
    };
 

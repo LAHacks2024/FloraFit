@@ -1,7 +1,7 @@
 import { StyleSheet, Text, View, Image } from 'react-native';
-import { styles } from './style.tsx';
 
 import React from 'react';
+import {styles} from "./style";
 
 
 export default function Landing() {

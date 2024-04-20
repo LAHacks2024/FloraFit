@@ -12,6 +12,7 @@ import Stop from './src/stop/stop';
 import StopJournaling from './src/stop-journaling/stop-journaling';
 import Greenhouse from './src/greenhouse/greenhouse';
 
+const Stack = createStackNavigator();
 
 export default function App() {
   

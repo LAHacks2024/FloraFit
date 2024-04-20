@@ -31,7 +31,7 @@ export const styles = StyleSheet.create({
     },
     touchable: {
       height: 70,
-    }
-
-
+    },
+  touchableLeft: {}, // TODO
+  touchableRight: {} // TODO
   });
