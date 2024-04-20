@@ -22,10 +22,7 @@ export default function Map() {
    };
 
    const navigateToGreenHouse = () => {
-      navigation.navigate('Stop', {
-         stopName: 'natural bridges',
-         location: 'santa cruz'
-      });
+      navigation.navigate('Greenhouse');
    };
 
    async function requestLocationPermission() { 
@@ -93,7 +90,7 @@ export default function Map() {
          <View style={styles.bottomRow}>
             <TouchableOpacity
                style={styles.touchableLeft}
-               onPress={() => console.log("press")}
+               onPress={() => navigateToGreenHouse()}
             > 
                <Image source={require('../../assets/buttons/greenhouse.png')} style={{height: 66, width: 66}}/>
             </TouchableOpacity>

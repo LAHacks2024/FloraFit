@@ -10,17 +10,19 @@ import Map from './src/home/home';
 import Landing from './src/landing/landing';
 import Stop from './src/stop/stop';
 import StopJournaling from './src/stop-journaling/stop-journaling';
+import Greenhouse from './src/greenhouse/greenhouse';
 
 
 export default function App() {
   
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="Landing">
+      <Stack.Navigator initialRouteName="Home">
         <Stack.Screen name="Home" component={Map} />
         <Stack.Screen name="Landing" component={Landing} />
         <Stack.Screen name="Stop" component={Stop} />
         <Stack.Screen name="StopJournaling" component={StopJournaling} />
+        <Stack.Screen name="Greenhouse" component={Greenhouse} />
       </Stack.Navigator>
 
     </NavigationContainer>
