@@ -15,6 +15,7 @@ import { useFonts } from 'expo-font';
 import Greenhouse from './src/greenhouse/greenhouse';
 import Settings from './src/settings/settings';
 import ChangeSole from "./src/changeSole/changeSole.tsx";
+import PlantDex from "./src/plantDex/plantDex.tsx";
 
 const Stack = createStackNavigator();
 
@@ -42,6 +43,9 @@ export default function App() {
           headerShown: false
         }} />
         <Stack.Screen name={"ChangeSole"} component={ChangeSole} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name={"PlantDex"} component={PlantDex} options={{
           headerShown: false
         }} />
         <Stack.Screen name="Greenhouse" component={Greenhouse} />

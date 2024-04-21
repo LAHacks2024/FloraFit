@@ -59,7 +59,9 @@ export default function Settings({navigation}) {
           <Text style={globalStyles.optionButtonText}>Change Sole Mate</Text>
         </TouchableOpacity>
 
-        <TouchableOpacity style={globalStyles.optionButton}>
+        <TouchableOpacity onPress={() => {
+          navigation.navigate('PlantDex');
+        }} style={globalStyles.optionButton}>
           <Text style={globalStyles.optionButtonText}>View PlantDex</Text>
         </TouchableOpacity>
 
