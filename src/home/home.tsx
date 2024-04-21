@@ -1,24 +1,3 @@
-import {Plant, PlantDTO} from "../entities/plant.model";
-import {FloraFirebase} from "./FloraFirebase";
-
-export class PlantsDB extends FloraFirebase<Plant, PlantDTO> {
-    constructor() {
-        super('plants');
-    };
-}
-
-
-
-
-
-
-
-
-
-
-
-
-
 import { TouchableOpacity, View } from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE}  from 'react-native-maps';
 import {LocationObject, requestForegroundPermissionsAsync, getCurrentPositionAsync, watchPositionAsync, LocationAccuracy } from 'expo-location';
