@@ -20,13 +20,13 @@ export const styles = StyleSheet.create({
   },
   containerStyle: {
     backgroundColor: 'white',
-    padding: 25,
-    margin: 15,
+    padding: 35,
+    margin: 10,
     borderRadius: 15,
   },
   modalImage: {
-    width: 200,
-    height: 200,
+    width: 160,
+    height: 220,
     marginBottom: 15,
     alignSelf: 'center',
   },
@@ -36,9 +36,10 @@ export const styles = StyleSheet.create({
   modalTitle: {
     fontSize: 20,
     fontWeight: 'bold',
-    marginBottom: 10,
+    marginVertical: 15,
   },
   modalDescription: {
-    fontSize: 15,
+    fontSize: 18,
+    lineHeight: 28,
   },
 });
