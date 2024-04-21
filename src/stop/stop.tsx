@@ -19,6 +19,9 @@ export default function Stop({route, navigation}) {
       });
    };
 
+   console.log('stop route: ')
+   console.log(route)
+
     return (
       <Layout>
          <View style={globalStyles.header}>
@@ -34,7 +37,7 @@ export default function Stop({route, navigation}) {
                   <Image source={require('../../assets/markers/marker-bw.png')} style={{width: 28, height: 28}}></Image>
                   <Text style={globalStyles.headerInnerCellHeader}>Root Route</Text>
                </View>
-               <Text style={globalStyles.headerCellText}>natural bridges beach</Text>
+               <Text style={globalStyles.headerCellText}>{route.params.stopName}</Text>
             </View>
          </View>
 
@@ -48,6 +51,18 @@ export default function Stop({route, navigation}) {
              style={globalStyles.optionButton}
            >
              <Text style={globalStyles.optionButtonText}>{'Write a journal entry for this stop'}</Text>
+           </TouchableOpacity>
+
+           <TouchableOpacity
+             onPress={() =>{
+              //  navigateToStopJournaling('natural bridges')
+              console.log(route)
+              navigation.navigate('OtherJournalers', route)
+             }
+             }
+             style={globalStyles.optionButton}
+           >
+             <Text style={globalStyles.optionButtonText}>{'See who else has journaled at this stop'}</Text>
            </TouchableOpacity>
          </View>
          {/*<TouchableOpacity*/}
