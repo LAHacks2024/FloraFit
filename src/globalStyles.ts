@@ -36,4 +36,18 @@ export const globalStyles = StyleSheet.create({
     flex: 1,
     alignItems: "center"
   },
+  optionButton: {
+    backgroundColor: '#ffffff',
+    paddingVertical: 25,
+    paddingHorizontal: 15,
+    borderRadius: 15,
+    shadowColor: "rgba(0,0,0)",
+    shadowRadius: 23,
+    width: "100%",
+  },
+  optionButtonText: {
+    fontSize: 17,
+    fontWeight: "500",
+    color: '#000',
+  }
 });

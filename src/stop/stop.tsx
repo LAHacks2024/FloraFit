@@ -45,9 +45,9 @@ export default function Stop({route, navigation}) {
              onPress={() =>
                navigateToStopJournaling('natural bridges')
              }
-             style={styles.button}
+             style={globalStyles.optionButton}
            >
-             <Text>{'Write a journal entry for this stop'}</Text>
+             <Text style={globalStyles.optionButtonText}>{'Write a journal entry for this stop'}</Text>
            </TouchableOpacity>
          </View>
          {/*<TouchableOpacity*/}
