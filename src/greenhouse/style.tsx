@@ -34,5 +34,12 @@ export const styles = StyleSheet.create({
       width: '100%',
       alignSelf: "center",
     },
+
+    left: {
+      borderRightColor: '#972626',
+    },
+    topHeader: {
+      paddingTop: 35,
+    },
     text: {},
   });

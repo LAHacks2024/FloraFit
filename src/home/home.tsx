@@ -194,6 +194,14 @@ export default function Map({navigation}) {
                         latitude: stop.geometry.location.lat,
                         longitude: stop.geometry.location.lng,
                      }}
+<<<<<<< HEAD
+                     key={`marker-${index}`}
+                     onPress={() => navigateToStop(stop.name, stop.plus_code.compound_code)} >
+                     <Image 
+                        source={require('../../assets/markers/stop-marker.png')} 
+                        key={`marker-icon-${index}`}
+                        style={{height: 85, width:85, resizeMode: 'contain'}} />
+=======
                      onPress={() => {
                         if(
                            (Math.abs(location?.coords.latitude - stop.geometry.location.lat) > 0.0001) ||
@@ -208,6 +216,7 @@ export default function Map({navigation}) {
                      }}
                   >
                      <Image source={require('../../assets/markers/stop-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
+>>>>>>> main
 
                   </Marker>
 
@@ -222,8 +231,16 @@ export default function Map({navigation}) {
                         longitude: stop.geometry.location.lng,
                      }}
                      onPress={() => navigateToRaid(stop.name, stop.geometry.location.lat, stop.geometry.location.lng)}
+<<<<<<< HEAD
+                     key={`raid-marker-${index}`}>
+                     <Image 
+                        source={require('../../assets/markers/stop-marker.png')} 
+                        style={{height: 85, width:85, resizeMode: 'contain'}}
+                        key={`raid-marker-img${index}`} />
+=======
                   >
                      <Image source={require('../../assets/markers/raid-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
+>>>>>>> main
 
                   </Marker>
 
@@ -232,16 +249,21 @@ export default function Map({navigation}) {
 
          </MapView>
          <View style={styles.topLeft}>
-            <Image source={require('../../assets/step-icon.png')} style={{height: 100, width: 100, resizeMode: 'contain'}}/>
-            {isPedometerAvailable && <Text>Steps {stepCount}</Text>}
+            <Image 
+               source={require('../../assets/step-icon.png')} 
+               style={{
+                  height: 100, 
+                  width: 100, 
+                  marginBottom: 10,
+                  resizeMode: 'contain'}}/>
+            {isPedometerAvailable && <Text style={styles.pedometerTxt}>Steps {stepCount}</Text>}
             {currentStepCount > 5 && 
-            
-            <TouchableOpacity
-               style={styles.touchableLeft}
-               onPress={() => navigateToEvolution()}
-            > 
-               <Text>Level Up Your Buddy!</Text>
-            </TouchableOpacity>}
+               <TouchableOpacity
+                  style={styles.touchableLeft}
+                  onPress={() => navigateToEvolution()}
+               > 
+                  <Text>Level Up Your Buddy!</Text>
+               </TouchableOpacity>}
 
          </View>
          <View style={styles.bottomRow}>

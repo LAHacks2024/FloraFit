@@ -48,12 +48,12 @@ export default function Evolution({navigation}) {
       const plants = new Plants();
       const buddy = await buddies.get(currUser.soleMateId);
       if (buddy.stage == PlantStage.FIRST) {
-         await buddies.update(currUser.soleMateId, {stage: PlantStage.SECOND});
+         await buddies.update(currUser.soleMateId, {stage: PlantStage.SECOND}); // buddy evolves
          const buddyImage = await new Images().getImage(PlantStage.SECOND);
          setBuddyImage(buddyImage);
 
       } else if (buddy.stage == PlantStage.SECOND) {
-         await buddies.update(currUser.soleMateId, {stage: PlantStage.THIRD});
+         await buddies.update(currUser.soleMateId, {stage: PlantStage.THIRD}); // buddy evolves
          const plant = await plants.get(buddy.plantId);
          const buddyImage = await new Images().getImage(plant.name);
          setBuddyImage(buddyImage);

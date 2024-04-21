@@ -8,5 +8,6 @@ export interface UserDTO {
   email: string;
   picture: string;
   soleMateId?: string;
+  numPlants?: number;
   inventory?: string[];
 }

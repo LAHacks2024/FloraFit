@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Button } from 'react-native';
+import { 
+  Text, 
+  View, 
+  Image, 
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform
+} from 'react-native';
 import { Users } from '../../backend/api/users.ts';
 
 import React, { useState } from 'react';
@@ -41,62 +48,63 @@ export default function SignUpPage({navigation}) {
 
 
     return (
-      <View
-      style={styles.loginBackground}
-      >
-        <LinearGradient
-          // Background Linear Gradient
-          colors={[ '#b5dcf8','#e3eef6']}
-          style={{flex:1}}
-        >
-          <Text
-          style={{
-            fontSize: 40,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            marginTop: 50,
-          }}
-          > Sign Up </Text>
+      <KeyboardAvoidingView
+        style = {{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
-          <View 
-          style={{
-            marginLeft: 30,
-            width: 300,
-            marginTop: 40
-          }}>
-            <TextInput
-            label='Email'
-            value={email}
-            onChangeText={(text)=>setEmail(text)}
-            ></TextInput>
-          </View>
-{/* setting the user name */}
-          <View 
-          style={{
-            marginLeft: 30,
-            width: 300,
-            marginTop: 40
-          }}>
-            <TextInput
-            label='User Name'
-            value={username}
-            onChangeText={(text)=>setUserName(text)}
-            ></TextInput>
-          </View>
+        <View
+          
+          style={styles.loginBackground} >
+          <LinearGradient
+            // Background Linear Gradient
+            colors={[ '#b5dcf8','#e3eef6']}
+            style={{flex:1}}
+          >
+            <Text
+            style={{
+              fontSize: 40,
+              fontWeight: 'bold',
+              textAlign: 'center',
+              marginTop: 50,
+            }}
+            > Sign Up </Text>
 
-{/* setting the password */}
-          <View 
-          style={{
-            marginLeft: 30,
-            width: 300,
-            marginTop: 40
-          }}>
-            <TextInput
-            label='Password'
-            value={password}
-            onChangeText={(text)=>setPassword(text)}
-            ></TextInput>
-          </View>
+            <View 
+            style={{
+              marginLeft: 30,
+              width: 300,
+              marginTop: 40
+            }}>
+              <TextInput
+                label='Email'
+                value={email}
+                onChangeText={(text)=>setEmail(text)} />
+            </View>
+  {/* setting the user name */}
+            <View 
+            style={{
+              marginLeft: 30,
+              width: 300,
+              marginTop: 40
+            }}>
+              <TextInput
+                label='User Name'
+                value={username}
+                onChangeText={(text)=>setUserName(text)} />
+            </View>
+
+  {/* setting the password */}
+            <View 
+            style={{
+              marginLeft: 30,
+              width: 300,
+              marginTop: 40
+            }}>
+              <TextInput
+                label='Password'
+                value={password}
+                onChangeText={(text)=>setPassword(text)} />
+            </View>
 
 
 
@@ -134,8 +142,9 @@ export default function SignUpPage({navigation}) {
         ></Image>
 
 
-        </LinearGradient>
-        {/* <Text>Hello</Text> */}
-      </View>
+          </LinearGradient>
+          {/* <Text>Hello</Text> */}
+        </View>
+      </KeyboardAvoidingView>
     );
 }

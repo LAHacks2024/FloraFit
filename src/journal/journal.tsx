@@ -5,6 +5,7 @@ import {useEffect, useState} from "react";
 import {UserJournal} from "../../backend/entities/UserJournal.entity.ts";
 import { UserJournals} from "../../backend/api/userJournal.ts";
 import firebase from "firebase/compat";
+import { USER_ID } from "../../backend/environments.ts";
 import Timestamp = firebase.firestore.Timestamp;
 
 export default function Journal({navigation}) {
@@ -13,9 +14,8 @@ export default function Journal({navigation}) {
   useEffect(() => {
     const fetchJournals = async () => {
       const userJournal = new UserJournals();
-      const tempJournals: UserJournal[] = await userJournal.getAll();
-      console.log(tempJournals);
-      setJournals(tempJournals);
+      const journalCollection: UserJournal[] = await userJournal.getWhere(['userId', '==', USER_ID]);
+      setJournals(journalCollection);
     }
 
     fetchJournals();

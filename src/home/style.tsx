@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-
+import { RFPercentage } from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
     container: {
@@ -21,6 +21,14 @@ export const styles = StyleSheet.create({
       position:'absolute',
       top: 10,
       left: 10,
+
+      display: 'flex',
+      flexDirection: 'column',
+      justifyContent: 'center',
+      padding: 10,
+
+      backgroundColor: 'rgba(241, 252, 240, 0.5)',
+      borderRadius: 10,
 
     },
     bottomRow: {
@@ -48,5 +56,11 @@ export const styles = StyleSheet.create({
   touchableLeft: {}, // TODO
   touchableRight: {
 
-  } // TODO
+  }, // TODO
+
+  pedometerTxt: {
+    fontSize: RFPercentage(2.5),
+    fontWeight: 'bold',
+    textAlign: 'center',
+  }
   });

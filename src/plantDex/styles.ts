@@ -29,6 +29,7 @@ export const styles = StyleSheet.create({
     height: 220,
     marginBottom: 15,
     alignSelf: 'center',
+    resizeMode: 'contain',
   },
   modalContent: {
     alignItems: 'center',
