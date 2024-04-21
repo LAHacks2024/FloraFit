@@ -17,6 +17,8 @@ import Settings from './src/settings/settings';
 import ChangeSole from "./src/changeSole/changeSole.tsx";
 import PlantDex from "./src/plantDex/plantDex.tsx";
 import Journal from "./src/journal/journal.tsx";
+import Evolution from './src/evolve-buddy/evolve-buddy.tsx';
+import SignUpPage from './src/signup_page/signup';
 
 const Stack = createStackNavigator();
 
@@ -24,6 +26,8 @@ export default function App() {
 
   const [fontsLoaded, fontError] = useFonts({
     'DMSans': require('./assets/fonts/static/DMSans-Bold.ttf'),
+    'DMSans-Medium-Italic-24': require('./assets/fonts/static/DMSans_24pt-ExtraLightItalic.ttf'),
+    'PressStart2P': require('./assets/fonts/PressStart2P-Regular.ttf')
   });
 
 
@@ -54,7 +58,10 @@ export default function App() {
         }} />
         <Stack.Screen name="Journal" component={Journal} options={{
           headerShown: false
-        }} />
+        }} />        
+        <Stack.Screen name="SignUpPage" component={SignUpPage} />
+        <Stack.Screen name="Greenhouse" component={Greenhouse} />
+        <Stack.Screen name="Evolution" component={Evolution} />
       </Stack.Navigator>
     </NavigationContainer>
   );
