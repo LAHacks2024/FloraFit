@@ -130,7 +130,7 @@ export default function Map({navigation}) {
                .catch(error => {
                  console.error(error);
             });
-            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=200&type=parking&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
+            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=500&type=parking&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
                .then(response => response.json())
                .then(json => {
                  // console.log(json.results)
@@ -205,7 +205,7 @@ export default function Map({navigation}) {
                      }}
                      onPress={() => navigateToRaid(stop.name, stop.geometry.location.lat, stop.geometry.location.lng)}
                   >
-                     <Image source={require('../../assets/markers/stop-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
+                     <Image source={require('../../assets/markers/raid-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
 
                   </Marker>
 

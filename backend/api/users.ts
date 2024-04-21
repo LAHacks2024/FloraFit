@@ -16,6 +16,7 @@ export class Users extends FloraFirebase<User, UserDTO>{
       name,
       email: '',
       picture: '',
+      inventory: [],
     };
     let newUserId: string;
 

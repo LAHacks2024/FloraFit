@@ -50,20 +50,6 @@ export default function Stop({route, navigation}) {
              <Text style={globalStyles.optionButtonText}>{'Write a journal entry for this stop'}</Text>
            </TouchableOpacity>
          </View>
-         {/*<TouchableOpacity*/}
-         {/*         onPress={() =>*/}
-         {/*            navigateToStopJournaling('natural bridges')*/}
-         {/*         }*/}
-         {/*      >*/}
-         {/*         <Text>{'See who else has visited this stop'}</Text>*/}
-         {/*</TouchableOpacity>*/}
-         {/*<TouchableOpacity*/}
-         {/*         onPress={() =>*/}
-         {/*            navigateToStopJournaling('natural bridges')*/}
-         {/*         }*/}
-         {/*      >*/}
-         {/*         <Text>{'Use item at this stop'}</Text>*/}
-         {/*</TouchableOpacity>*/}
       </Layout>
     );
 
