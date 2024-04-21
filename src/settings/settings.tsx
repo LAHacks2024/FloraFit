@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 import {Images} from "../../backend/api/images.ts";
 import {UserPlants} from "../../backend/api/userPlants.ts";
 import {Users} from "../../backend/api/users.ts";
-import { PlantsDB } from "../../backend/api/plants.ts";
+import { Plants } from "../../backend/api/plants.ts";
 import { PlantStage } from "../../backend/entities/UserPlant.model.ts";
 
 export default function Settings({navigation}) {
@@ -22,10 +22,12 @@ export default function Settings({navigation}) {
       const plant = await new Plants().get(buddy.plantId)
       let buddyImage;
       if (buddy.stage == PlantStage.THIRD ) {
-        const buddyImage = await new Images().getImage(plant.name);
+        const buddyImage = await new Images().getImage(buddy.stage);
+    
 
       } else {
         const buddyImage = await new Images().getImage(buddy.stage);
+        console.log(buddyImage)
       }
 
       setBuddyImage(buddyImage);
@@ -48,7 +50,7 @@ export default function Settings({navigation}) {
 
   return (
     <Layout>
-      <View style={styles.header}>
+      <View style={[styles.header, {marginTop: 50}]}>
         <IconButton icon={'close'} onPress={handleClose} iconColor={'#000'} size={35}></IconButton>
         <Text style={styles.headerText}>Settings</Text>
       </View>
@@ -81,11 +83,6 @@ export default function Settings({navigation}) {
 
         <TouchableOpacity style={globalStyles.optionButton}>
           <Text style={globalStyles.optionButtonText}>Change Other Profile Information</Text>
-        </TouchableOpacity>
-
-        <TouchableOpacity style={globalStyles.optionButton}
-          onPress={()=>{navigation.navigate('Raid')}}>
-          <Text style={globalStyles.optionButtonText}>REMOVE Go to Raid Screen REMOVE</Text>
         </TouchableOpacity>
       </View>
 
