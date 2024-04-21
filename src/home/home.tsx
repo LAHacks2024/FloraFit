@@ -10,13 +10,14 @@ import { PlantStage, UserPlant } from '../../backend/entities/UserPlant.model';
 import {Images} from "../../backend/api/images.ts";
 import {UserPlants} from "../../backend/api/userPlants.ts";
 import {Users} from "../../backend/api/users.ts";
+import { User } from '../../backend/entities/user.model.ts';
 import {AUTH} from "../../backend/environments.ts";
 
 
 export default function Map({navigation}) {
 
    const [buddy, setBuddy] = useState<UserPlant | undefined >(null);
-   const [user, setUser] = useState<Users | undefined >(null);
+   const [user, setUser] = useState<User | undefined >(null);
 
 
    useEffect(() => {

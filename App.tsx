@@ -72,6 +72,6 @@ export default function App() {
       </Stack.Navigator>
     </NavigationContainer>
   );
-    
 }
+AppRegistry.registerComponent('FloraFit', () => App);
 
