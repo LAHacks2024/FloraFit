@@ -45,6 +45,7 @@ export const globalStyles = StyleSheet.create({
     shadowColor: "rgba(0,0,0)",
     shadowRadius: 23,
     width: "100%",
+    marginBottom: 10,
   },
   optionButtonText: {
     fontSize: 17,

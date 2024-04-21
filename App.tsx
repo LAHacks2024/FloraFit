@@ -21,6 +21,7 @@ import Evolution from './src/evolve-buddy/evolve-buddy.tsx';
 import SignUpPage from './src/signup_page/signup';
 import RaidScreen from './src/raid/raid.tsx';
 import NewPlant from './src/new-plant/new-plant.tsx';
+import OtherJournalers from './src/stop-other-journals/stop-other-journals.tsx';
 
 const Stack = createStackNavigator();
 
@@ -74,6 +75,7 @@ export default function App() {
         }} />  
         <Stack.Screen name="Evolution" component={Evolution} />
         <Stack.Screen name="NewPlant" component={NewPlant} />
+        <Stack.Screen name={"OtherJournalers"} component={OtherJournalers} />
       </Stack.Navigator>
     </NavigationContainer>
   );

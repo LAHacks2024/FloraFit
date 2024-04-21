@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from 'react-native';
+import { Alert, TouchableOpacity, View } from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE}  from 'react-native-maps';
 import {LocationObject, requestForegroundPermissionsAsync, getCurrentPositionAsync, watchPositionAsync, LocationAccuracy } from 'expo-location';
 import { useEffect, useRef, useState } from 'react';
@@ -194,7 +194,18 @@ export default function Map({navigation}) {
                         latitude: stop.geometry.location.lat,
                         longitude: stop.geometry.location.lng,
                      }}
-                     onPress={() => navigateToStop(stop.name, stop.plus_code.compound_code)}
+                     onPress={() => {
+                        if(
+                           (Math.abs(location?.coords.latitude - stop.geometry.location.lat) > 0.0001) ||
+                           (Math.abs(location?.coords.longitude - stop.geometry.location.lng) > 0.0001)
+
+                        ){
+                           alert('You need to get closer to the stop to journal about it!')
+                        } else {
+                           console.log(Math.abs(location?.coords.latitude - stop.geometry.location.lat))
+                           navigateToStop(stop.name, stop.plus_code.compound_code)
+                        }
+                     }}
                   >
                      <Image source={require('../../assets/markers/stop-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
 
