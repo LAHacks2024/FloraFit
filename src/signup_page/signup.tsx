@@ -7,6 +7,8 @@ import React, { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import {styles} from './style.ts'
 import {TextInput} from 'react-native-paper'
+import { User } from 'firebase/auth';
+import { UserDTO } from '../../backend/entities/user.model.ts';
 
 enum status {
   LOGGING_IN,
@@ -19,7 +21,23 @@ export default function SignUpPage({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUserName] = useState('')
+    
+    // Updates the buddy to user
+  const handleNewUser = async () => {
+    const user = new Users()
+            user.createUser(email, password, username)
+            const newUser: UserDTO = {
+                name: username,
+                email: email,
+                picture: '',
+                inventory: []
+            }
+            await user.create(newUser);
 
+
+            navigation.navigate('Home')
+
+   };
 
 
     return (
@@ -92,10 +110,8 @@ export default function SignUpPage({navigation}) {
             marginLeft: 140,
             
           }}
-          onPress={()=>{
-            const user = new Users()
-            user.createUser(email, password, username)
-            navigation.navigate('Home')
+          onPress={async () => {
+            await handleNewUser();
           }}>
             <Text
             style={{
