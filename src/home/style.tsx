@@ -16,6 +16,12 @@ export const styles = StyleSheet.create({
       width: 50,
       height: 50,
     },
+    topLeft: {
+      position:'absolute',
+      top: 10,
+      left: 10,
+
+    },
     bottomRow: {
       flex: 1,
       height: 80,

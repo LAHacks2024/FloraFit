@@ -3,19 +3,54 @@ import MapView, {Marker, PROVIDER_GOOGLE}  from 'react-native-maps';
 import {LocationObject, requestForegroundPermissionsAsync, getCurrentPositionAsync, watchPositionAsync, LocationAccuracy } from 'expo-location';
 import { useEffect, useRef, useState } from 'react';
 import React from 'react';
-import { Image } from 'react-native';
+import { Image, Text} from 'react-native';
 import {styles} from "./style";
+import { Pedometer } from 'expo-sensors';
 
 export default function Map({navigation}) {
 
    const [location, setLocation] = useState<LocationObject | null>(null);
+   const [stops, setStops] = useState<Array<any>>([]);
    const timeAppOpened = new Date();
    const mapRef = useRef<MapView>(null);
+   const [isPedometerAvailable, setIsPedometerAvailable] = useState('checking');
+   const [stepCount, setStepCount] = useState(0);
+   const [currentStepCount, setCurrentStepCount] = useState(0);
+
+   const subscribe = async () => {
+      const isAvailable = await Pedometer.isAvailableAsync();
+      setIsPedometerAvailable(String(isAvailable));
+  
+      if (isAvailable) {
+        const end = new Date();
+        const start = new Date();
+        start.setDate(end.getDate() - 1);
+  
+        const pastStepCountResult = await Pedometer.getStepCountAsync(start, end);
+        if (pastStepCountResult) {
+          setStepCount(pastStepCountResult.steps);
+        }
+        if (pastStepCountResult.steps > 1000) {
+         console.log('you deserve an item')
+        }
+  
+        return Pedometer.watchStepCount(result => {
+         setStepCount((count) => count + result.steps);
+         setCurrentStepCount(result.steps);
+        });
+      }
+    };
+  
+    useEffect(() => {
+      const subscription = subscribe();
+      return () => subscription && subscription.remove();
+    }, []);
+   
 
    const navigateToStop = (stopName: string, location: string) => {
       navigation.navigate('Stop', {
-         stopName: 'natural bridges',
-         location: 'santa cruz',
+         stopName: stopName,
+         location: location,
       });
    };
 
@@ -42,13 +77,14 @@ export default function Map({navigation}) {
       watchPositionAsync({
         accuracy: LocationAccuracy.Highest, 
         // timeInterval: 3000, /** apparently this is android only */
-        distanceInterval: 10, /** 10 meters walked, update position */
+        distanceInterval: 80, /** 10 meters walked, update position */
       }, (response) => {
             console.log('hi', response.coords.latitude, response.coords.longitude)
             fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=500&type=park&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
                .then(response => response.json())
                .then(json => {
                  console.log(json.results)
+                 setStops(json.results);
                })
                .catch(error => {
                  console.error(error);
@@ -130,7 +166,28 @@ export default function Map({navigation}) {
 
             </Marker>
 
+            {
+               stops.map((stop, index) => (
+                  <Marker 
+                     coordinate={{
+                        latitude: stop.geometry.location.lat,
+                        longitude: stop.geometry.location.lng,
+                     }}
+                     onPress={() => navigateToStop(stop.name, stop.plus_code.compound_code)}
+                  >
+                     <Image source={require('../../assets/markers/stop-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
+
+                  </Marker>
+
+               ))
+            }
+
          </MapView>
+         <View style={styles.topLeft}>
+            {isPedometerAvailable && <Text>Steps {stepCount}</Text>}
+            {isPedometerAvailable && <Text>Steps {currentStepCount}</Text>}
+
+         </View>
          <View style={styles.bottomRow}>
             <TouchableOpacity
                style={styles.touchableLeft}
