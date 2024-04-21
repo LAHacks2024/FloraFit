@@ -11,6 +11,7 @@ import {Images} from "../../backend/api/images.ts";
 import {UserPlants} from "../../backend/api/userPlants.ts";
 import {Users} from "../../backend/api/users.ts";
 import {AUTH} from "../../backend/environments.ts";
+import {User} from "../../backend/entities/user.model.ts";
 
 
 export default function Map({navigation}) {
