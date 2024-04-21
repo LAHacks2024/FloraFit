@@ -17,6 +17,7 @@ import Settings from './src/settings/settings';
 import ChangeSole from "./src/changeSole/changeSole.tsx";
 import PlantDex from "./src/plantDex/plantDex.tsx";
 import SignUpPage from './src/signup_page/signup';
+import RaidScreen from './src/raid/raid.tsx';
 
 const Stack = createStackNavigator();
 
@@ -37,7 +38,11 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">
         <Stack.Screen name="Home" component={Map} />
-        <Stack.Screen name="Landing" component={Landing} />
+        <Stack.Screen name="Landing" component={Landing} options={{
+          headerShown: false
+
+          }}/>
+
         <Stack.Screen name="Stop" component={Stop} />
         <Stack.Screen name="StopJournaling" component={StopJournaling} />
         <Stack.Screen name="LogInPage" component={LogInPage} />
@@ -49,7 +54,11 @@ export default function App() {
         }} />
         <Stack.Screen name={"PlantDex"} component={PlantDex} options={{
           headerShown: false
-        }} />        <Stack.Screen name="SignUpPage" component={SignUpPage} />
+        }} />        
+        <Stack.Screen name="SignUpPage" component={SignUpPage} />
+        <Stack.Screen name={"Raid"} component={RaidScreen} options={{
+          headerShown: false
+        }} />  
 
         <Stack.Screen name="Greenhouse" component={Greenhouse} />
       </Stack.Navigator>
