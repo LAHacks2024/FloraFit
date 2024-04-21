@@ -32,6 +32,7 @@ export default function Map({navigation}) {
    // user location and stops state
    const [location, setLocation] = useState<LocationObject | null>(null);
    const [stops, setStops] = useState<Array<any>>([]);
+   const [raids, setRaids] = useState<Array<any>>([]);
    const mapRef = useRef<MapView>(null);
 
    // step count state
@@ -80,6 +81,14 @@ export default function Map({navigation}) {
       });
    };
 
+   const navigateToRaid = (stopName: string, latitude: string, longitude: string) => {
+      navigation.navigate('Raid', {
+         stopName: stopName,
+         latitude: latitude,
+         longitude: longitude,
+      });
+   };
+
    const navigateToGreenHouse = () => {
       navigation.navigate('Greenhouse');
    };
@@ -110,6 +119,8 @@ export default function Map({navigation}) {
         distanceInterval: 250, /** 10 meters walked, update position */
       }, (response) => {
             //console.log('hi', response.coords.latitude, response.coords.longitude)
+
+            /** getting normal stops */
             fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=500&type=park&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
                .then(response => response.json())
                .then(json => {
@@ -118,6 +129,20 @@ export default function Map({navigation}) {
                })
                .catch(error => {
                  console.error(error);
+            });
+            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=200&type=parking&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
+               .then(response => response.json())
+               .then(json => {
+                 // console.log(json.results)
+                 setRaids(json.results);
+               })
+               .catch(error => {
+                 console.error(error);
+            });
+            setLocation(response);
+            mapRef.current?.animateCamera({
+               pitch: 70,
+               center: response.coords
             });
             setLocation(response);
             mapRef.current?.animateCamera({
@@ -168,6 +193,22 @@ export default function Map({navigation}) {
                         longitude: stop.geometry.location.lng,
                      }}
                      onPress={() => navigateToStop(stop.name, stop.plus_code.compound_code)}
+                  >
+                     <Image source={require('../../assets/markers/stop-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
+
+                  </Marker>
+
+               ))
+            }
+
+{
+               raids.map((stop, index) => (
+                  <Marker 
+                     coordinate={{
+                        latitude: stop.geometry.location.lat,
+                        longitude: stop.geometry.location.lng,
+                     }}
+                     onPress={() => navigateToRaid(stop.name, stop.geometry.location.lat, stop.geometry.location.lng)}
                   >
                      <Image source={require('../../assets/markers/stop-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
 
