@@ -21,5 +21,24 @@ export const styles = StyleSheet.create({
   containerStyle: {
     backgroundColor: 'white',
     padding: 25,
+    margin: 15,
+    borderRadius: 15,
+  },
+  modalImage: {
+    width: 200,
+    height: 200,
+    marginBottom: 15,
+    alignSelf: 'center',
+  },
+  modalContent: {
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginBottom: 10,
+  },
+  modalDescription: {
+    fontSize: 15,
   },
 });
