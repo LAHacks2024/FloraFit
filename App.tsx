@@ -44,7 +44,9 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">
-        <Stack.Screen name="Home" component={Map} />
+        <Stack.Screen name="Home" component={Map} options={{
+          headerShown: false
+        }}/>
         <Stack.Screen name="Landing" component={Landing} options={{
           headerShown: false
           }}/>

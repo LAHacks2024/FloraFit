@@ -19,16 +19,14 @@ export const styles = StyleSheet.create({
     },
     topLeft: {
       position:'absolute',
-      top: 10,
+      top: 50,
       left: 10,
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
       padding: 10,
-
       backgroundColor: 'rgba(241, 252, 240, 0.5)',
       borderRadius: 10,
-
     },
     bottomRow: {
       flex: 1,
