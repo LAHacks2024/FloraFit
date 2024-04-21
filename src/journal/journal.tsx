@@ -7,7 +7,6 @@ import { UserJournals} from "../../backend/api/userJournal.ts";
 import firebase from "firebase/compat";
 import { USER_ID } from "../../backend/environments.ts";
 import Timestamp = firebase.firestore.Timestamp;
-import { Users } from "../../backend/api/users.ts";
 
 export default function Journal({navigation}) {
   const [journals, setJournals] = useState<UserJournal[]>([]);
