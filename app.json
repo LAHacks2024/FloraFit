@@ -32,7 +32,7 @@
       [
         "expo-font",
         {
-          "fonts": ["assets/fonts/DMSans-VariableFont_opsz,wght.ttf"]
+          "fonts": ["assets/fonts/DMSans-VariableFont_opsz,wght.ttf", "assets/fonts/PressStart2P-Regular.ttf"]
         }
       ]
     ]
