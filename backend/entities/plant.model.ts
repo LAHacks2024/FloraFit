@@ -5,6 +5,7 @@ export interface PlantDTO {
   dexDescription: string;
   dialog: string[];
   imageURL: string;
+  discoveryLocation: number;
 }
 
 export interface Plant extends GeneralModel, PlantDTO {}
