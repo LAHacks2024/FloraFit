@@ -182,7 +182,7 @@ export default function Map({navigation}) {
                   latitude: location ? location?.coords.latitude + .0001 : 2,
                   longitude: location ? location?.coords.longitude + .0001: 2,
                }}
-               onPress={() => navigateToStop('bleh', 'bleh')}
+               onPress={() => navigateToStop('UCLA Pauley Pavillion', 'Los Angeles')}
             >
                <Image source={require('../../assets/markers/stop-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
 
@@ -217,6 +217,7 @@ export default function Map({navigation}) {
 
 {
                raids.map((stop, index) => (
+                  
                   <Marker 
                      coordinate={{
                         latitude: stop.geometry.location.lat,
@@ -225,9 +226,9 @@ export default function Map({navigation}) {
                      onPress={() => navigateToRaid(stop.name, stop.geometry.location.lat, stop.geometry.location.lng)}
                      key={`raid-marker-${index}`}>
                      <Image 
-                        source={require('../../assets/markers/stop-marker.png')} 
+                        source={require('../../assets/markers/raid-marker.png')} 
                         style={{height: 85, width:85, resizeMode: 'contain'}}
-                        key={`raid-marker-img${index}`} />
+                        />
 
                   </Marker>
 
@@ -244,12 +245,12 @@ export default function Map({navigation}) {
                   marginBottom: 10,
                   resizeMode: 'contain'}}/>
             {isPedometerAvailable && <Text style={styles.pedometerTxt}>Steps {stepCount}</Text>}
-            {currentStepCount > 5 && 
+            {(currentStepCount > 10 * (buddy.stage == PlantStage.FIRST ? 2 : 4) && buddy.stage != PlantStage.THIRD) &&
                <TouchableOpacity
                   style={styles.touchableLeft}
                   onPress={() => navigateToEvolution()}
                > 
-                  <Text>Level Up Your Buddy!</Text>
+                  <Text style={{color: 'white'}}>Level Up Your Buddy!</Text>
                </TouchableOpacity>}
 
          </View>

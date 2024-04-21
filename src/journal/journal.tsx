@@ -14,7 +14,7 @@ export default function Journal({navigation}) {
   useEffect(() => {
     const fetchJournals = async () => {
       const userJournal = new UserJournals();
-      const journalCollection: UserJournal[] = await userJournal.getWhere(['userId', '==', USER_ID]);
+      const journalCollection: UserJournal[] = await userJournal.getWhere([['userId', '==', USER_ID]]);
       setJournals(journalCollection);
     }
 

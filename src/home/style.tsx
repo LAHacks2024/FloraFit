@@ -41,7 +41,6 @@ export const styles = StyleSheet.create({
       alignSelf: "center",
       justifyContent: "space-around",
       backgroundColor: "transparent",
-      borderWidth: 0.5,
       borderRadius: 20
     },
     touchable: {
@@ -53,7 +52,10 @@ export const styles = StyleSheet.create({
       borderColor: '#fff',
       borderRadius: 50,
     },
-  touchableLeft: {}, // TODO
+  touchableLeft: {
+    padding: 10,
+    backgroundColor: '#BCDCC9',
+  }, // TODO
   touchableRight: {
 
   }, // TODO
