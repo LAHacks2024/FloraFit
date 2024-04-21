@@ -14,7 +14,8 @@ import React, { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import {styles} from './style.ts'
 import {TextInput} from 'react-native-paper'
-import { useHeaderHeight } from '@react-navigation/elements'
+import { User } from 'firebase/auth';
+import { UserDTO } from '../../backend/entities/user.model.ts';
 
 enum status {
   LOGGING_IN,
@@ -27,12 +28,24 @@ export default function SignUpPage({navigation}) {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
     const [username, setUserName] = useState('')
+    
+    // Updates the buddy to user
+  const handleNewUser = async () => {
+    const user = new Users()
+            user.createUser(email, password, username)
+            const newUser: UserDTO = {
+                name: username,
+                email: email,
+                picture: '',
+                inventory: []
+            }
+            await user.create(newUser);
 
-    const handleUserCreation = async () => {
-      const user = new Users()
-      user.createUser(email, password, username)
-      navigation.navigate('Home')
-    }
+
+            navigation.navigate('Home')
+
+   };
+
 
     return (
       <KeyboardAvoidingView
@@ -95,36 +108,38 @@ export default function SignUpPage({navigation}) {
 
 
 
-            <TouchableOpacity
-            style={{
-              borderRadius: 10,
-              backgroundColor: '#2A3779',
-              padding:10,
-              width: 100,
-              marginTop: 40,
-              marginLeft: 140,
-              
-            }}
-            onPress={handleUserCreation}>
-              <Text
-              style={{
-                fontWeight: 'bold',
-                fontFamily: 'DMSans',
-                alignContent: 'center',
-                color:'white',
-                textAlign: 'center'
-              }}> Sign Up </Text>
-            </TouchableOpacity>
-          <Image
+          <TouchableOpacity
           style={{
-            height:200,
-            width:200,
-            marginTop: 30,
-            flex:1,
-            alignSelf: 'flex-end'
+            borderRadius: 10,
+            backgroundColor: '#2A3779',
+            padding:10,
+            width: 100,
+            marginTop: 40,
+            marginLeft: 140,
+            
           }}
-          source={require('../../assets/images/ivy-plant-watercolor-simplicity-painting-free-png 1.png')}
-          ></Image>
+          onPress={async () => {
+            await handleNewUser();
+          }}>
+            <Text
+            style={{
+              fontWeight: 'bold',
+              fontFamily: 'DMSans',
+              alignContent: 'center',
+              color:'white',
+              textAlign: 'center'
+            }}> Sign Up </Text>
+          </TouchableOpacity>
+        <Image
+        style={{
+          height:200,
+          width:200,
+          marginTop: 30,
+          flex:1,
+          alignSelf: 'flex-end'
+        }}
+        source={require('../../assets/images/ivy-plant-watercolor-simplicity-painting-free-png 1.png')}
+        ></Image>
 
 
           </LinearGradient>

@@ -9,4 +9,5 @@ export interface UserDTO {
   picture: string;
   soleMateId?: string;
   numPlants?: number;
+  inventory?: string[];
 }

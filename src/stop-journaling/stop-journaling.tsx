@@ -45,6 +45,8 @@ export default function StopJournaling({ route, navigation }) {
 
      await journal.create(journalData);
 
+     const plantOptions = ['BTs7Rah7NzS1l2fAbEqR', 'WyQ7oPOi3M0bge42bRa4', 'k5PoBBk1KZqaE9F2bXTH', 'lSMMScMgmbHbsMrhSyQF', 'ymGW5WrOFpnj0mCBduEX']
+     const pickedPlant = plantOptions[Math.floor(Math.random()*plantOptions.length)];
      const userPlant = new UserPlants();
      const plant: UserPlantDTO = {
        userId: AUTH.currentUser.uid,
@@ -54,7 +56,7 @@ export default function StopJournaling({ route, navigation }) {
      };
      await userPlant.create(plant);
 
-     await navigation.goBack();
+     await navigation.navigate('NewPlant');
    }
 
    useEffect(() => {

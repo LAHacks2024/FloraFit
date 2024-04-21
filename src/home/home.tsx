@@ -1,4 +1,4 @@
-import { TouchableOpacity, View } from 'react-native';
+import { Alert, TouchableOpacity, View } from 'react-native';
 import MapView, {Marker, PROVIDER_GOOGLE}  from 'react-native-maps';
 import {LocationObject, requestForegroundPermissionsAsync, getCurrentPositionAsync, watchPositionAsync, LocationAccuracy } from 'expo-location';
 import { useEffect, useRef, useState } from 'react';
@@ -15,14 +15,17 @@ import {AUTH} from "../../backend/environments.ts";
 
 export default function Map({navigation}) {
 
-   const [buddy, setBuddy] = useState<UserPlant | undefined >(null)
+   const [buddy, setBuddy] = useState<UserPlant | undefined >(null);
+   const [user, setUser] = useState<User | undefined >(null);
+
 
    useEffect(() => {
       const getBuddy = async () => {
         const currUser = await new Users().get(AUTH.currentUser.uid);
         const buddy = await new UserPlants().get(currUser.soleMateId);
         console.log(buddy);
-        setBuddy(buddy)
+        setBuddy(buddy);
+        setUser(currUser);
 
       }
       getBuddy();
@@ -54,8 +57,9 @@ export default function Map({navigation}) {
         if (pastStepCountResult) {
           setStepCount(pastStepCountResult.steps);
         }
-        if (pastStepCountResult.steps > 1000) {
-         console.log('you deserve an item')
+        if (user?.inventory.length == 0 && pastStepCountResult.steps > 1000) {
+            navigateToNewItem();
+         
         }
    
   
@@ -96,6 +100,9 @@ export default function Map({navigation}) {
    const navigateToEvolution = () => {
       navigation.navigate('Evolution');
    };
+   const navigateToNewItem = () => {
+      navigation.navigate('NewItem');
+   };
 
    async function requestLocationPermission() { 
       const {granted} = await requestForegroundPermissionsAsync();
@@ -130,7 +137,7 @@ export default function Map({navigation}) {
                .catch(error => {
                  console.error(error);
             });
-            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=200&type=parking&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
+            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=500&type=parking&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
                .then(response => response.json())
                .then(json => {
                  // console.log(json.results)
@@ -187,12 +194,29 @@ export default function Map({navigation}) {
                         latitude: stop.geometry.location.lat,
                         longitude: stop.geometry.location.lng,
                      }}
+<<<<<<< HEAD
                      key={`marker-${index}`}
                      onPress={() => navigateToStop(stop.name, stop.plus_code.compound_code)} >
                      <Image 
                         source={require('../../assets/markers/stop-marker.png')} 
                         key={`marker-icon-${index}`}
                         style={{height: 85, width:85, resizeMode: 'contain'}} />
+=======
+                     onPress={() => {
+                        if(
+                           (Math.abs(location?.coords.latitude - stop.geometry.location.lat) > 0.0001) ||
+                           (Math.abs(location?.coords.longitude - stop.geometry.location.lng) > 0.0001)
+
+                        ){
+                           alert('You need to get closer to the stop to journal about it!')
+                        } else {
+                           console.log(Math.abs(location?.coords.latitude - stop.geometry.location.lat))
+                           navigateToStop(stop.name, stop.plus_code.compound_code)
+                        }
+                     }}
+                  >
+                     <Image source={require('../../assets/markers/stop-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
+>>>>>>> main
 
                   </Marker>
 
@@ -207,11 +231,16 @@ export default function Map({navigation}) {
                         longitude: stop.geometry.location.lng,
                      }}
                      onPress={() => navigateToRaid(stop.name, stop.geometry.location.lat, stop.geometry.location.lng)}
+<<<<<<< HEAD
                      key={`raid-marker-${index}`}>
                      <Image 
                         source={require('../../assets/markers/stop-marker.png')} 
                         style={{height: 85, width:85, resizeMode: 'contain'}}
                         key={`raid-marker-img${index}`} />
+=======
+                  >
+                     <Image source={require('../../assets/markers/raid-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
+>>>>>>> main
 
                   </Marker>
 
