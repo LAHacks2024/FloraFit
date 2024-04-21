@@ -52,6 +52,16 @@ export default function Journal({navigation}) {
           </TouchableOpacity>
         ))}
       </View>
+
+      <IconButton icon={'pencil'} style={{
+        position: 'absolute',
+        bottom: 40,
+        right: 20,
+        margin: 20,
+        backgroundColor: '#759CB8',
+      }} size={50} onPress={() => navigation.navigate('JournalForm')}
+       />
+
       <Portal>
         <Modal visible={visible} onDismiss={hideModal} contentContainerStyle={styles.modalContainer}>
           <Text style={styles.modalHeader}>{currentJournal?.prompt}</Text>

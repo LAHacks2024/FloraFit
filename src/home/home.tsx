@@ -44,40 +44,48 @@ export default function Map({navigation}) {
    const [currentStepCount, setCurrentStepCount] = useState(0);
 
    // pedometer handling
-   const subscribe = async () => {
-      const isAvailable = await Pedometer.isAvailableAsync();
-      setIsPedometerAvailable(String(isAvailable));
-  
-      if (isAvailable) {
-        const end = new Date();
-        const start = new Date();
-        start.setDate(end.getDate() - 1);
-  
-        const pastStepCountResult = await Pedometer.getStepCountAsync(start, end);
-        if (pastStepCountResult) {
-          setStepCount(pastStepCountResult.steps);
-        }
-        if (user?.inventory.length == 0 && pastStepCountResult.steps > 1000) {
-            navigateToNewItem();
-        }
-   
-  
-        return Pedometer.watchStepCount(result => {
-         setStepCount((count) => count + result.steps);
-         setCurrentStepCount(result.steps);
-        });
+  const subscribe = async () => {
+    const isAvailable = await Pedometer.isAvailableAsync();
+    setIsPedometerAvailable(String(isAvailable));
+
+    console.log('isAvailable', isAvailable);
+
+    if (!isAvailable) return null;
+
+    const end = new Date();
+    const start = new Date(end);
+    start.setDate(end.getDate() - 1);
+
+    const pastStepCountResult = await Pedometer.getStepCountAsync(start, end);
+    if (pastStepCountResult) {
+      setStepCount(pastStepCountResult.steps);
+      if (user?.inventory.length === 0 && pastStepCountResult.steps > 1000) {
+        navigateToNewItem();
       }
+    }
+
+    return Pedometer.watchStepCount(result => {
+      console.log('steps', result.steps);
+      setStepCount(count => count + result.steps);
+      setCurrentStepCount(result.steps);
+    });
+  };
+
+
+  useEffect(() => {
+    let subscription;
+    const getSubscription = async () => {
+      subscription = await subscribe();
     };
 
+    getSubscription();
 
-   useEffect(() => {
-     const sub = async () => {
-       const subscription = await subscribe();
-       return subscription && subscription.remove();
-     }
-
-      sub();
-   }, []);
+    return () => {
+      if (subscription) {
+        subscription.remove();
+      }
+    };
+  }, []);
 
 
    // stops and redirection handling
@@ -160,6 +168,10 @@ export default function Map({navigation}) {
 
     return (
       <View style={styles.container}>
+        <Text>Pedometer.isAvailableAsync(): {isPedometerAvailable}</Text>
+        <Text>Steps taken in the last 24 hours: {stepCount}</Text>
+        <Text>Walk! And watch this go up: {currentStepCount}</Text>
+
         <MapView 
           provider={PROVIDER_GOOGLE}
           ref={mapRef}
