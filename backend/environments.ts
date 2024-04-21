@@ -1,8 +1,10 @@
 import {getAnalytics} from "firebase/analytics";
 import {initializeApp} from "firebase/app";
-import { getAuth } from 'firebase/auth';
+import { getAuth, onAuthStateChanged } from 'firebase/auth';
 import {getFirestore} from 'firebase/firestore';
 import {getStorage} from 'firebase/storage';
+import { initializeAuth, getReactNativePersistence } from 'firebase/auth';
+import ReactNativeAsyncStorage from '@react-native-async-storage/async-storage';
 
 
 export const firebaseConfig = {
@@ -23,4 +25,10 @@ export const STORAGE = getStorage(APP);
 export const analytics = getAnalytics(APP);
 
 export const AUTH = getAuth(APP);
+initializeAuth(APP, {
+  persistence: getReactNativePersistence(ReactNativeAsyncStorage)
+});
+
+export const USER_NAME = AUTH.currentUser?.displayName;
+export const USER_ID = AUTH.currentUser?.uid;
 AUTH.languageCode = 'it';

@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-
+import {RFPercentage} from 'react-native-responsive-fontsize';
 
 export const styles = StyleSheet.create({
     container: {
@@ -41,7 +41,8 @@ export const styles = StyleSheet.create({
     },
     title: {
       fontFamily:'PressStart2P',
-      fontSize: 60,
+      fontSize: RFPercentage(7),
+      lineHeight: 70,
       textAlign: 'center',
       alignSelf: 'center',
       color: '#3d61a7',
@@ -76,19 +77,7 @@ export const styles = StyleSheet.create({
       ],      
       
     },
-    // background: {
-    //   position: 'absolute',
-    //   width: 1200,
-    //   height: 1200,
-    //   top: 0,
-    //   opacity: 0.2,
-    //   transform: [
-    //     {
-    //       translateX: 0,
-    //     },
-    //     {
-    //       translateY: 0,
-    //     },
-    //   ],      
-    // }, 
+    avoidingView: {
+      flex: 1
+    }
   });

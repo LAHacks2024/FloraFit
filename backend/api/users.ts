@@ -34,6 +34,8 @@ export class Users extends FloraFirebase<User, UserDTO>{
       throw new Error('Error creating account!');
     }
 
+    // create the user in the users table
+
     return returnedUser;
   }
 

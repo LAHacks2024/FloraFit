@@ -1,4 +1,11 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Button } from 'react-native';
+import { 
+  Text, 
+  View, 
+  Image, 
+  TouchableOpacity,
+  KeyboardAvoidingView,
+  Platform
+} from 'react-native';
 import { Users } from '../../backend/api/users.ts';
 
 import React, { useState } from 'react';
@@ -7,6 +14,7 @@ import React, { useState } from 'react';
 import { LinearGradient } from 'expo-linear-gradient';
 import {styles} from './style.ts'
 import {TextInput} from 'react-native-paper'
+import { useHeaderHeight } from '@react-navigation/elements'
 
 enum status {
   LOGGING_IN,
@@ -20,106 +28,108 @@ export default function SignUpPage({navigation}) {
     const [password, setPassword] = useState('')
     const [username, setUserName] = useState('')
 
-
+    const handleUserCreation = async () => {
+      const user = new Users()
+      user.createUser(email, password, username)
+      navigation.navigate('Home')
+    }
 
     return (
-      <View
-      style={styles.loginBackground}
-      >
-        <LinearGradient
-          // Background Linear Gradient
-          colors={[ '#b5dcf8','#e3eef6']}
-          style={{flex:1}}
-        >
-          <Text
-          style={{
-            fontSize: 40,
-            fontWeight: 'bold',
-            textAlign: 'center',
-            marginTop: 50,
-          }}
-          > Sign Up </Text>
+      <KeyboardAvoidingView
+        style = {{flex: 1}}
+        behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
 
-          <View 
-          style={{
-            marginLeft: 30,
-            width: 300,
-            marginTop: 40
-          }}>
-            <TextInput
-            label='Email'
-            value={email}
-            onChangeText={(text)=>setEmail(text)}
-            ></TextInput>
-          </View>
-{/* setting the user name */}
-          <View 
-          style={{
-            marginLeft: 30,
-            width: 300,
-            marginTop: 40
-          }}>
-            <TextInput
-            label='User Name'
-            value={username}
-            onChangeText={(text)=>setUserName(text)}
-            ></TextInput>
-          </View>
-
-{/* setting the password */}
-          <View 
-          style={{
-            marginLeft: 30,
-            width: 300,
-            marginTop: 40
-          }}>
-            <TextInput
-            label='Password'
-            value={password}
-            onChangeText={(text)=>setPassword(text)}
-            ></TextInput>
-          </View>
-
-
-
-          <TouchableOpacity
-          style={{
-            borderRadius: 10,
-            backgroundColor: '#2A3779',
-            padding:10,
-            width: 100,
-            marginTop: 40,
-            marginLeft: 140,
-            
-          }}
-          onPress={()=>{
-            const user = new Users()
-            user.createUser(email, password, username)
-            navigation.navigate('Home')
-          }}>
+        <View
+          
+          style={styles.loginBackground} >
+          <LinearGradient
+            // Background Linear Gradient
+            colors={[ '#b5dcf8','#e3eef6']}
+            style={{flex:1}}
+          >
             <Text
             style={{
+              fontSize: 40,
               fontWeight: 'bold',
-              fontFamily: 'DMSans',
-              alignContent: 'center',
-              color:'white',
-              textAlign: 'center'
-            }}> Sign Up </Text>
-          </TouchableOpacity>
-        <Image
-        style={{
-          height:200,
-          width:200,
-          marginTop: 30,
-          flex:1,
-          alignSelf: 'flex-end'
-        }}
-        source={require('../../assets/images/ivy-plant-watercolor-simplicity-painting-free-png 1.png')}
-        ></Image>
+              textAlign: 'center',
+              marginTop: 50,
+            }}
+            > Sign Up </Text>
+
+            <View 
+            style={{
+              marginLeft: 30,
+              width: 300,
+              marginTop: 40
+            }}>
+              <TextInput
+                label='Email'
+                value={email}
+                onChangeText={(text)=>setEmail(text)} />
+            </View>
+  {/* setting the user name */}
+            <View 
+            style={{
+              marginLeft: 30,
+              width: 300,
+              marginTop: 40
+            }}>
+              <TextInput
+                label='User Name'
+                value={username}
+                onChangeText={(text)=>setUserName(text)} />
+            </View>
+
+  {/* setting the password */}
+            <View 
+            style={{
+              marginLeft: 30,
+              width: 300,
+              marginTop: 40
+            }}>
+              <TextInput
+                label='Password'
+                value={password}
+                onChangeText={(text)=>setPassword(text)} />
+            </View>
 
 
-        </LinearGradient>
-        {/* <Text>Hello</Text> */}
-      </View>
+
+            <TouchableOpacity
+            style={{
+              borderRadius: 10,
+              backgroundColor: '#2A3779',
+              padding:10,
+              width: 100,
+              marginTop: 40,
+              marginLeft: 140,
+              
+            }}
+            onPress={handleUserCreation}>
+              <Text
+              style={{
+                fontWeight: 'bold',
+                fontFamily: 'DMSans',
+                alignContent: 'center',
+                color:'white',
+                textAlign: 'center'
+              }}> Sign Up </Text>
+            </TouchableOpacity>
+          <Image
+          style={{
+            height:200,
+            width:200,
+            marginTop: 30,
+            flex:1,
+            alignSelf: 'flex-end'
+          }}
+          source={require('../../assets/images/ivy-plant-watercolor-simplicity-painting-free-png 1.png')}
+          ></Image>
+
+
+          </LinearGradient>
+          {/* <Text>Hello</Text> */}
+        </View>
+      </KeyboardAvoidingView>
     );
 }

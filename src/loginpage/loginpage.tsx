@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, Image, TouchableOpacity, Button } from 'react-native';
+import { Text, View, Image, TouchableOpacity } from 'react-native';
 import { Users } from '../../backend/api/users.ts';
 
 import React, { useState } from 'react';
