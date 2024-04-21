@@ -3,8 +3,8 @@ import {GeneralModel} from "./general.model";
 export interface UserPlantDTO {
   // indefication information
   userId: string;
-  jounralID: string;
-  plantID: string; // use to pull the plant name and graphic
+  journalId: string;
+  plantId: string; // use to pull the plant name and graphic
 
   // plant information
   dialog: string;

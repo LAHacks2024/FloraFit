@@ -8,7 +8,7 @@ import {useEffect, useState} from "react";
 import {Images} from "../../backend/api/images.ts";
 import {UserPlants} from "../../backend/api/userPlants.ts";
 import {Users} from "../../backend/api/users.ts";
-import { Plants } from "../../backend/api/plants.ts";
+import { PlantsDB } from "../../backend/api/plants.ts";
 import { PlantStage } from "../../backend/entities/UserPlant.model.ts";
 
 export default function Settings({navigation}) {

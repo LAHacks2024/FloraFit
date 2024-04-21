@@ -53,7 +53,7 @@ const getRandomPlant = (): string | null => {
   }
 }
 
-export const getPlant = async (userID: string, jounralID: string) => {
+export const getPlant = async (userID: string, journalId: string) => {
   const plantsDB = new Plants();
   const userPlantsDB = new UserPlants();
 
@@ -63,8 +63,8 @@ export const getPlant = async (userID: string, jounralID: string) => {
     const plantDialoge = randPlant.dialog[Math.floor(Math.random() * randPlant.dialog.length)]; // get a random dialog
     userPlantsDB.create({
       userId: userID, 
-      plantID: randPlant.id,
-      jounralID: jounralID,
+      plantId: randPlant.id,
+      journalId: journalId,
       dialog: plantDialoge,
       stage: PlantStage.FIRST,
       currentStepCount: 0,
