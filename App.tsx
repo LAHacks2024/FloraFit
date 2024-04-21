@@ -16,6 +16,7 @@ import Greenhouse from './src/greenhouse/greenhouse';
 import Settings from './src/settings/settings';
 import ChangeSole from "./src/changeSole/changeSole.tsx";
 import PlantDex from "./src/plantDex/plantDex.tsx";
+import Journal from "./src/journal/journal.tsx";
 
 const Stack = createStackNavigator();
 
@@ -48,7 +49,12 @@ export default function App() {
         <Stack.Screen name={"PlantDex"} component={PlantDex} options={{
           headerShown: false
         }} />
-        <Stack.Screen name="Greenhouse" component={Greenhouse} />
+        <Stack.Screen name="Greenhouse" component={Greenhouse} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name="Journal" component={Journal} options={{
+          headerShown: false
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   );
