@@ -31,7 +31,7 @@ export default function App() {
     'DMSans-Medium-Italic-24': require('./assets/fonts/static/DMSans_24pt-ExtraLightItalic.ttf'),
     'PressStart2P': require('./assets/fonts/PressStart2P-Regular.ttf'),
     'DMSans-Variable': require('./assets/fonts/DMSans-VariableFont_opsz,wght.ttf'),
-    'DMSans-Bold': require('./assets/fonts/static/DMSans-Bold.ttf');
+    'DMSans-Bold': require('./assets/fonts/static/DMSans-Bold.ttf'),
   });
 
 
@@ -44,17 +44,12 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator initialRouteName="Landing">
         <Stack.Screen name="Home" component={Map} />
-        <Stack.Screen name="Landing" component={Landing} options={{
-          headerShown: false
-
-          }}/>
+        <Stack.Screen name="Landing" component={Landing} options={{headerShown: false}}/>
 
         <Stack.Screen name="Stop" component={Stop} />
         <Stack.Screen name="StopJournaling" component={StopJournaling} />
         <Stack.Screen name="LogInPage" component={LogInPage} />
-        <Stack.Screen name={"Settings"} component={Settings} options={{
-          headerShown: false
-        }} />
+        <Stack.Screen name={"Settings"} component={Settings} options={{headerShown: false}} />
         <Stack.Screen name={"ChangeSole"} component={ChangeSole} options={{
           headerShown: false
         }} />

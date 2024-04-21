@@ -5,7 +5,7 @@ import { Plants } from "../../backend/api/plants.ts";
 import { Images } from "../../backend/api/images.ts";
 import { useState, useEffect } from "react";
 
-const GreenHousePlant = (userPlant: UserPlant) => {
+const GreenHousePlant = ({userPlant, navigation}) => {
     const [plantImg, setPlantImg] = useState<string>(''); // [plantImgURL, setPlantImgURL
     const getPlantImg = async () => {
         const plantName = (await new Plants().get(userPlant.plantId)).name;
@@ -20,7 +20,7 @@ const GreenHousePlant = (userPlant: UserPlant) => {
             setPlantImg(img);
         });
     }, []);
-    
+
     return (
         <TouchableOpacity>
             <Image source={{uri: plantImg}} style={{width: 100, height: 110, resizeMode: 'contain'}}></Image>

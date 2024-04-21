@@ -37,7 +37,8 @@ export default function SignUpPage({navigation}) {
                 name: username,
                 email: email,
                 picture: '',
-                inventory: []
+                inventory: [],
+                numPlants: 0
             }
             await user.create(newUser);
 

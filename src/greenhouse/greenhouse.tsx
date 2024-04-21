@@ -12,6 +12,7 @@ import { LinearGradient } from 'expo-linear-gradient';
 import { IconButton } from 'react-native-paper';
 
 export default function Greenhouse({navigation}) {
+    const plantLocations = [];
 
     return (
       <View style={styles.container}>

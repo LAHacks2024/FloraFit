@@ -5,7 +5,7 @@ import {useEffect, useState} from "react";
 import {UserJournal} from "../../backend/entities/UserJournal.entity.ts";
 import { UserJournals} from "../../backend/api/userJournal.ts";
 import firebase from "firebase/compat";
-import { USER_ID } from "../../backend/environments.ts";
+import { USER_ID, USER_NAME } from "../../backend/environments.ts";
 import Timestamp = firebase.firestore.Timestamp;
 
 export default function Journal({navigation}) {
@@ -14,7 +14,7 @@ export default function Journal({navigation}) {
   useEffect(() => {
     const fetchJournals = async () => {
       const userJournal = new UserJournals();
-      const journalCollection: UserJournal[] = await userJournal.getWhere(['userId', '==', USER_ID]);
+      const journalCollection: UserJournal[] = await userJournal.getWhere([['userId', '==', USER_ID]]);
       setJournals(journalCollection);
     }
 
@@ -28,7 +28,7 @@ export default function Journal({navigation}) {
           <IconButton style={{marginBottom: 45}} size={40} icon={'close'} onPress={() => navigation.navigate('Greenhouse')} />
         </View>
         <View style={[styles.right, styles.topHeader]}>
-          <Text style={styles.header}>Journal</Text>
+          <Text style={styles.header}>{USER_NAME}'s Journal</Text>
         </View>
       </View>
       <View>
