@@ -21,11 +21,12 @@ export default function Map({navigation}) {
       const getBuddy = async () => {
         const currUser = await new Users().get(AUTH.currentUser.uid);
         const buddy = await new UserPlants().get(currUser.soleMateId);
+        console.log(buddy);
         setBuddy(buddy)
 
       }
       getBuddy();
-   }, [buddy]);
+   }, []);
 
 
    // user location and stops state
@@ -55,21 +56,19 @@ export default function Map({navigation}) {
         if (pastStepCountResult.steps > 1000) {
          console.log('you deserve an item')
         }
+   
   
         return Pedometer.watchStepCount(result => {
          setStepCount((count) => count + result.steps);
          setCurrentStepCount(result.steps);
-         if (currentStepCount > 100 && buddy.stage != PlantStage.THIRD) {
-            navigation.navigate('Greenhouse');
-         }
         });
       }
     };
   
 
    useEffect(() => {
-   const subscription = subscribe();
-   return () => subscription && subscription.remove();
+      const subscription = subscribe();
+      return () => subscription && subscription.remove();
    }, []);
    
 
@@ -83,6 +82,10 @@ export default function Map({navigation}) {
 
    const navigateToGreenHouse = () => {
       navigation.navigate('Greenhouse');
+   };
+
+   const navigateToEvolution = () => {
+      navigation.navigate('Evolution');
    };
 
    async function requestLocationPermission() { 
@@ -104,13 +107,13 @@ export default function Map({navigation}) {
       watchPositionAsync({
         accuracy: LocationAccuracy.Highest, 
         // timeInterval: 3000, /** apparently this is android only */
-        distanceInterval: 100, /** 10 meters walked, update position */
+        distanceInterval: 250, /** 10 meters walked, update position */
       }, (response) => {
-            console.log('hi', response.coords.latitude, response.coords.longitude)
+            //console.log('hi', response.coords.latitude, response.coords.longitude)
             fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=500&type=park&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
                .then(response => response.json())
                .then(json => {
-                 console.log(json.results)
+                 // console.log(json.results)
                  setStops(json.results);
                })
                .catch(error => {
@@ -177,7 +180,14 @@ export default function Map({navigation}) {
          <View style={styles.topLeft}>
             <Image source={require('../../assets/step-icon.png')} style={{height: 100, width: 100, resizeMode: 'contain'}}/>
             {isPedometerAvailable && <Text>Steps {stepCount}</Text>}
-            {isPedometerAvailable && <Text>Steps {currentStepCount}</Text>}
+            {currentStepCount > 5 && 
+            
+            <TouchableOpacity
+               style={styles.touchableLeft}
+               onPress={() => navigateToEvolution()}
+            > 
+               <Text>Level Up Your Buddy!</Text>
+            </TouchableOpacity>}
 
          </View>
          <View style={styles.bottomRow}>

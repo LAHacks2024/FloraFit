@@ -24,6 +24,7 @@ export default function App() {
 
   const [fontsLoaded, fontError] = useFonts({
     'DMSans': require('./assets/fonts/static/DMSans-Bold.ttf'),
+    'DMSans-Medium-Italic-24': require('./assets/fonts/static/DMSans_24pt-ExtraLightItalic.ttf'),
   });
 
 

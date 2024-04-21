@@ -9,10 +9,21 @@ export const styles = StyleSheet.create({
       paddingLeft: 15,
       paddingRight: 30,
         marginBottom: 10,
+        
     },
   headerText: {
     fontSize: 30,
     fontWeight: 'bold',
+    fontFamily: 'DMSans',
+  },
+  subtitle: {
+   alignContent: 'center',
+  },
+  descText: {
+   textAlign: 'center',
+   fontFamily: 'DMSans-Medium-Italic-24',
+   fontSize: 20,
+
   },
   mainImages: {
     justifyContent: 'center',
