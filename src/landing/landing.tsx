@@ -41,7 +41,7 @@ export default function Landing({ navigation }) {
         style={styles.accountButtons}>
 
           <TouchableOpacity
-          style={styles.login_button}
+          style={styles.button}
           >
             <Text
             style={styles.button_text}
@@ -50,7 +50,7 @@ export default function Landing({ navigation }) {
             </Text>
           </TouchableOpacity>
           <TouchableOpacity
-          style={styles.signup_button}
+          style={styles.button}
           >
             <Text
             style={styles.button_text}
