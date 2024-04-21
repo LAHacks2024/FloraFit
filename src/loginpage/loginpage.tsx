@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 // import { Button } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import {styles} from './style.ts'
-import {TextInput} from 'react-native-paper'
+import {Banner, TextInput} from 'react-native-paper'
 
 enum status {
   LOGGING_IN,
@@ -18,12 +18,14 @@ export default function LogInPage({navigation}) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
+  const [error, setError] = useState<boolean>(false)
 
 
     return (
       <View
       style={styles.loginBackground}
       >
+        <Banner visible={error}>Error!</Banner>
         <LinearGradient
           // Background Linear Gradient
           colors={[ '#b5dcf8','#e3eef6']}
@@ -47,6 +49,7 @@ export default function LogInPage({navigation}) {
             <TextInput
             label='Email'
             value={email}
+            autoCapitalize={"none"}
             onChangeText={(text)=>setEmail(text)}
             ></TextInput>
           </View>
@@ -59,6 +62,8 @@ export default function LogInPage({navigation}) {
           }}>
             <TextInput
             label='Password'
+            secureTextEntry={true}
+            autoCapitalize={"none"}
             value={password}
             onChangeText={(text)=>setPassword(text)}
             ></TextInput>
@@ -74,10 +79,16 @@ export default function LogInPage({navigation}) {
             marginLeft: 140,
             
           }}
-          onPress={()=>{
+          onPress={async ()=>{
             const user = new Users()
-            user.loginUser(email, password)
-            navigation.navigate('Home')
+            try {
+              await user.loginUser(email, password)
+              navigation.navigate('Home')
+              setError(false);
+            } catch (err) {
+              setError(true);
+              console.log("error!")
+            }
           }}>
             <Text
             style={{
@@ -101,7 +112,6 @@ export default function LogInPage({navigation}) {
 
 
         </LinearGradient>
-        {/* <Text>Hello</Text> */}
       </View>
     );
 }

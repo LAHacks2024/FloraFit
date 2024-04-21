@@ -169,10 +169,17 @@ export default function Map({navigation}) {
                <Image source={require('../../assets/buttons/greenhouse.png')} style={{height: 66, width: 66}}/>
             </TouchableOpacity>
             <TouchableOpacity
-               style={styles.touchableRight}
-               onPress={() => console.log("press")}
+               style={[styles.touchable, styles.touchableRight]}
+               onPress={() => {
+                 navigation.navigate('Settings');
+               }}
             > 
-               <Image source={require('../../assets/buttons/ellipse.png')} style={{height: 66, width: 66}}/>
+               <Image source={require('../../assets/avatars/dino-buddy.png')} style={{
+                width: 60,
+                 height: 60,
+                 position: 'absolute',
+                top: 0,
+               }}/>
             </TouchableOpacity>
          </View>
       </View>

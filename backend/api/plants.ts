@@ -1,7 +1,7 @@
 import {FloraFirebase} from "./FloraFirebase";
-import {PlantDTO} from "../entities/plant.model";
+import {Plant, PlantDTO} from "../entities/plant.model";
 
-export class Plants extends FloraFirebase<Plants, PlantDTO> {
+export class Plants extends FloraFirebase<Plant, PlantDTO> {
   constructor() {
     super('plants');
   }

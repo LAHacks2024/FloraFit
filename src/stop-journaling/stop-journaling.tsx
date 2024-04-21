@@ -1,46 +1,101 @@
-import { StyleSheet, Text, View, Image, TextInput, SafeAreaView, ScrollView } from 'react-native';
-import { GoogleGenerativeAI } from "@google/generative-ai";
+import {Image, SafeAreaView, ScrollView, Text, TextInput, View} from 'react-native';
+import {GoogleGenerativeAI} from "@google/generative-ai";
 
-import React, { useEffect, useState } from 'react';
+import React, {useEffect, useState} from 'react';
 import {styles} from "./style";
+import {globalStyles} from "../globalStyles";
+import {Banner, Button} from "react-native-paper";
+import Layout from "../layout.tsx";
+import {UserJournal} from "../../backend/api/userJournal.ts";
+import {UserJournalDTO} from "../../backend/entities/UserJournal.entity.ts";
+import {AUTH} from "../../backend/environments.ts";
+import {UserPlants} from "../../backend/api/userPlants.ts";
+import {PlantStage, UserPlantDTO} from "../../backend/entities/UserPlant.model.ts";
 
 
-export default function StopJournaling({ route }) {
+export default function StopJournaling({ route, navigation }) {
    const stopName = route.params.stopName; //route params
    const city = route.params.city; //route params
 
+  const [hasError, setHasError] = useState<boolean>(false);
+  const [errorMessage, setErrorMessage] = useState<string>('')
    const [loading, setLoading] = useState(false);
-   const [apiData, setApiData] = useState<string>();
-   const [value, onChangeText] = useState('Type your response for your journal here for your personal reflection.');
-   const [text, setText] = useState([]);
+   const [question, setQuestion] = useState<string>();
+   const [value, onChangeText] = useState<string>('');
    const genAI = new GoogleGenerativeAI(
      "AIzaSyAt2C4Ppu9sl4ZNcqtwTyRt7ZfFVBzftwo"
    );
-   const fetchData = async () => {
-     const model = genAI.getGenerativeModel({ model: "gemini-pro" });
-     const prompt = `Come up with a journaling prompt based upon ${stopName} in ${city} to inspire introspection. Return a single question.`;
-     const result = await model.generateContent(prompt);
-     const response = await result.response;
-     const text = response.text();
-     setApiData(text);
-     setLoading(false);
-   };
+
+   const onSubmit = async () => {
+     if (value.length < 50) {
+       setErrorMessage('Please have more than 50 characters');
+       setHasError(true);
+       return;
+     }
+
+     setHasError(false);
+     setErrorMessage('');
+
+     const journal = new UserJournal();
+     const journalData: UserJournalDTO = {
+       userId: AUTH.currentUser.uid,
+       prompt: question,
+       response: value,
+     }
+
+     await journal.create(journalData);
+
+     const userPlant = new UserPlants();
+     const plant: UserPlantDTO = {
+       userId: AUTH.currentUser.uid,
+       plantId: 'WyQ7oPOi3M0bge42bRa4', // TODO: Remove the static
+       stage: PlantStage.FIRST,
+       currentStepCount: 0,
+     };
+     await userPlant.create(plant);
+
+     await navigation.goBack();
+   }
 
    useEffect(() => {
-  
+     const fetchData = async () => {
+       const model = genAI.getGenerativeModel({ model: "gemini-pro" });
+       const prompt = `Come up with a journaling prompt based upon ${stopName} in ${city} to inspire introspection. Return a single question, and please make it short, nothing extra, thank you.`;
+       const result = await model.generateContent(prompt);
+       const response = result.response;
+       const text = response.text();
+       setQuestion(text);
+       setLoading(false);
+     };
+
       fetchData();
-    }, [text]);
+    }, []);
 
   return (
-    <View style={styles.container}>
-      <Text>Hi</Text>
-      <View>
-        <Image source={require('../../assets/avatars/dino-buddy.png')}
-               style={{height: 90, width: 90, resizeMode: 'contain'}}/>
-        <Image/>
+    <Layout>
+      <Banner actions={[]} visible={hasError}>
+        {errorMessage}
+      </Banner>
+      <View style={globalStyles.header}>
+        <Button style={globalStyles.backButton} icon={"arrow-left-bold-circle"}
+                onPress={() =>
+                  navigation.goBack()
+                }
+        >
+          <></>
+        </Button>
+        <View style={globalStyles.headerCell}>
+          <View style={globalStyles.headerInnerCell}>
+            <Image source={require('../../assets/markers/marker-bw.png')} style={{width: 28, height: 28}}></Image>
+            <Text style={globalStyles.headerInnerCellHeader}>Root Route</Text>
+          </View>
+          <Text style={globalStyles.headerCellText}>natural bridges beach</Text>
+        </View>
+      </View>
 
-        <View>
-          {!loading && <Text>{apiData}</Text>}
+      <View style={styles.content}>
+        <View style={styles.question}>
+          {!loading && <Text>{question}</Text>}
           {loading && <Text>Loading...</Text>}
         </View>
 
@@ -54,18 +109,31 @@ export default function StopJournaling({ route }) {
             <TextInput
               editable
               multiline
-              numberOfLines={4}
-              maxLength={40}
-              onChangeText={text => onChangeText(text)}
+              onChangeText={onChangeText}
               value={value}
-              style={{padding: 10}}
+              placeholder={"Type your response for your journal here for your personal reflection."}
+              style={styles.textInput}
+              placeholderTextColor={'#989898'}
             />
           </SafeAreaView>
-
         </ScrollView>
-
+        <Image
+          style={{
+            // height: 96,
+            // width: 112,
+            position: "absolute",
+            bottom: -20,
+            zIndex: 2,
+            right: -20,
+          }}
+          source={require('../../assets/avatars/journal-avatar.png')}
+        ></Image>
       </View>
-    </View>
+
+      <Button contentStyle={{ paddingVertical: 15, }} onPress={onSubmit} textColor={'#fff'} style={styles.submitButton}>
+        <Text style={styles.buttonText}>finished!</Text>
+      </Button>
+    </Layout>
   );
 
 
