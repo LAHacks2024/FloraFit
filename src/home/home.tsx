@@ -15,14 +15,17 @@ import {AUTH} from "../../backend/environments.ts";
 
 export default function Map({navigation}) {
 
-   const [buddy, setBuddy] = useState<UserPlant | undefined >(null)
+   const [buddy, setBuddy] = useState<UserPlant | undefined >(null);
+   const [user, setUser] = useState<User | undefined >(null);
+
 
    useEffect(() => {
       const getBuddy = async () => {
         const currUser = await new Users().get(AUTH.currentUser.uid);
         const buddy = await new UserPlants().get(currUser.soleMateId);
         console.log(buddy);
-        setBuddy(buddy)
+        setBuddy(buddy);
+        setUser(currUser);
 
       }
       getBuddy();
@@ -54,8 +57,9 @@ export default function Map({navigation}) {
         if (pastStepCountResult) {
           setStepCount(pastStepCountResult.steps);
         }
-        if (pastStepCountResult.steps > 1000) {
-         console.log('you deserve an item')
+        if (user?.inventory.length == 0 && pastStepCountResult.steps > 1000) {
+            navigateToNewItem();
+         
         }
    
   
@@ -95,6 +99,9 @@ export default function Map({navigation}) {
 
    const navigateToEvolution = () => {
       navigation.navigate('Evolution');
+   };
+   const navigateToNewItem = () => {
+      navigation.navigate('NewItem');
    };
 
    async function requestLocationPermission() { 
