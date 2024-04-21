@@ -16,6 +16,7 @@ import Greenhouse from './src/greenhouse/greenhouse';
 import Settings from './src/settings/settings';
 import ChangeSole from "./src/changeSole/changeSole.tsx";
 import PlantDex from "./src/plantDex/plantDex.tsx";
+import Evolution from './src/evolve-buddy/evolve-buddy.tsx';
 
 const Stack = createStackNavigator();
 
@@ -49,6 +50,7 @@ export default function App() {
           headerShown: false
         }} />
         <Stack.Screen name="Greenhouse" component={Greenhouse} />
+        <Stack.Screen name="Evolution" component={Evolution} />
       </Stack.Navigator>
     </NavigationContainer>
   );

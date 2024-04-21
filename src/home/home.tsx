@@ -4,10 +4,29 @@ import {LocationObject, requestForegroundPermissionsAsync, getCurrentPositionAsy
 import { useEffect, useRef, useState } from 'react';
 import React from 'react';
 import { Image, Text} from 'react-native';
-import {styles} from "./style";
+import { styles} from "./style";
 import { Pedometer } from 'expo-sensors';
+import { PlantStage, UserPlant } from '../../backend/entities/UserPlant.model';
+import {Images} from "../../backend/api/images.ts";
+import {UserPlants} from "../../backend/api/userPlants.ts";
+import {Users} from "../../backend/api/users.ts";
+import {AUTH} from "../../backend/environments.ts";
+
 
 export default function Map({navigation}) {
+
+   const [buddy, setBuddy] = useState<UserPlant | undefined >(null)
+
+   useEffect(() => {
+      const getBuddy = async () => {
+        const currUser = await new Users().get(AUTH.currentUser.uid);
+        const buddy = await new UserPlants().get(currUser.soleMateId);
+        setBuddy(buddy)
+
+      }
+      getBuddy();
+   }, [buddy]);
+
 
    // user location and stops state
    const [location, setLocation] = useState<LocationObject | null>(null);
@@ -40,8 +59,8 @@ export default function Map({navigation}) {
         return Pedometer.watchStepCount(result => {
          setStepCount((count) => count + result.steps);
          setCurrentStepCount(result.steps);
-         if (currentStepCount > 100) {
-            console.log('level up time')
+         if (currentStepCount > 100 && buddy.stage != PlantStage.THIRD) {
+            navigation.navigate('Greenhouse');
          }
         });
       }
