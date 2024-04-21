@@ -82,6 +82,11 @@ export default function Settings({navigation}) {
         <TouchableOpacity style={globalStyles.optionButton}>
           <Text style={globalStyles.optionButtonText}>Change Other Profile Information</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity style={globalStyles.optionButton}
+          onPress={()=>{navigation.navigate('Raid')}}>
+          <Text style={globalStyles.optionButtonText}>REMOVE Go to Raid Screen REMOVE</Text>
+        </TouchableOpacity>
       </View>
 
       <TouchableOpacity onPress={handleLogOut} style={styles.logOutButton}>
