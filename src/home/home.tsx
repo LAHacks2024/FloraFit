@@ -16,7 +16,7 @@ import {User} from "../../backend/entities/user.model.ts";
 
 export default function Map({navigation}) {
 
-   const [buddy, setBuddy] = useState<UserPlant | undefined >(null);
+   const [buddy, setBuddy] = useState<UserPlant | undefined >(undefined);
    const [user, setUser] = useState<User | undefined >(null);
 
 
@@ -24,7 +24,6 @@ export default function Map({navigation}) {
       const getBuddy = async () => {
         const currUser = await new Users().get(AUTH.currentUser.uid);
         const buddy = await new UserPlants().get(currUser.soleMateId);
-        console.log(buddy);
         setBuddy(buddy);
         setUser(currUser);
 
@@ -60,7 +59,6 @@ export default function Map({navigation}) {
         }
         if (user?.inventory.length == 0 && pastStepCountResult.steps > 1000) {
             navigateToNewItem();
-         
         }
    
   
@@ -70,13 +68,17 @@ export default function Map({navigation}) {
         });
       }
     };
-  
+
 
    useEffect(() => {
-      const subscription = subscribe();
-      return () => subscription && subscription.remove();
+     const sub = async () => {
+       const subscription = await subscribe();
+       return subscription && subscription.remove();
+     }
+
+      sub();
    }, []);
-   
+
 
    // stops and redirection handling
    const navigateToStop = (stopName: string, location: string) => {
@@ -190,7 +192,8 @@ export default function Map({navigation}) {
 
             {
                stops.map((stop, index) => (
-                  <Marker 
+                  <Marker
+                      key={`stop-marker-${index}`}
                      coordinate={{
                         latitude: stop.geometry.location.lat,
                         longitude: stop.geometry.location.lng,
@@ -245,7 +248,7 @@ export default function Map({navigation}) {
                   marginBottom: 10,
                   resizeMode: 'contain'}}/>
             {isPedometerAvailable && <Text style={styles.pedometerTxt}>Steps {stepCount}</Text>}
-            {(currentStepCount > 10 * (buddy.stage == PlantStage.FIRST ? 2 : 4) && buddy.stage != PlantStage.THIRD) &&
+            {buddy && (currentStepCount > 10 * (buddy.stage == PlantStage.FIRST ? 2 : 4) && buddy.stage != PlantStage.THIRD) &&
                <TouchableOpacity
                   style={styles.touchableLeft}
                   onPress={() => navigateToEvolution()}
