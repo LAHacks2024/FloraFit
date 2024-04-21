@@ -1,6 +1,6 @@
 import {View, Text, Image, TouchableOpacity} from "react-native";
 import Layout from "../layout.tsx";
-import {Button, IconButton} from "react-native-paper";
+import {ActivityIndicator, Button, IconButton} from "react-native-paper";
 import {styles} from "./styles.ts";
 import {globalStyles} from "../globalStyles.ts";
 import {AUTH} from "../../backend/environments.ts";
@@ -20,14 +20,11 @@ export default function Settings({navigation}) {
       const currUser = await new Users().get(AUTH.currentUser.uid);
       const buddy = await new UserPlants().get(currUser.soleMateId);
       const plant = await new Plants().get(buddy.plantId)
-      let buddyImage;
+      let buddyImage: string;
       if (buddy.stage == PlantStage.THIRD ) {
-        const buddyImage = await new Images().getImage(buddy.stage);
-    
-
+        buddyImage = await new Images().getImage(plant.imageURL);
       } else {
-        const buddyImage = await new Images().getImage(buddy.stage);
-        console.log(buddyImage)
+        buddyImage = await new Images().getImage(buddy.stage);
       }
 
       setBuddyImage(buddyImage);
@@ -62,7 +59,14 @@ export default function Settings({navigation}) {
           {buddyImage ? <Image style={{
             width: 100,
             height: 100,
-          }} source={{uri: buddyImage}}></Image> : null}
+            resizeMode: 'contain'
+          }} source={{uri: buddyImage}}></Image> :
+          <ActivityIndicator style={{
+            width: 100,
+            height: 100,
+            alignSelf: 'center'
+          }} size='large'></ActivityIndicator>
+          }
         </View>
       </View>
 

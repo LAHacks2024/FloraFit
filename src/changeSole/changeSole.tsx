@@ -1,23 +1,22 @@
 import Layout from "../layout.tsx";
 import React, {useEffect, useState} from "react";
-import {Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
-import {ActivityIndicator, IconButton} from "react-native-paper";
+import {
+  FlatList,
+  Image,
+  SafeAreaView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  View
+} from "react-native";
+import {ActivityIndicator, IconButton, Snackbar} from "react-native-paper";
 import {UserPlants} from "../../backend/api/userPlants.ts";
-import {AUTH, STORAGE} from "../../backend/environments.ts";
+import {AUTH} from "../../backend/environments.ts";
 import {UserPlant} from "../../backend/entities/UserPlant.model.ts";
 import {Plant} from "../../backend/entities/plant.model.ts";
 import {Plants} from "../../backend/api/plants.ts";
-import { getDownloadURL, uploadBytes, ref, deleteObject } from "firebase/storage";
 import {Images} from "../../backend/api/images.ts";
 import {Users} from "../../backend/api/users.ts";
-
-
-const { width } = Dimensions.get('window');
-const windowWidth = width;
-export const gap = 12;
-const itemPerRow = 4;
-const totalGapSize = (itemPerRow - 1) * gap;
-export const childWidth = (windowWidth - totalGapSize) / itemPerRow;
 
 interface UserPlantsExtended extends UserPlant {
   plantDetails: Plant;
@@ -29,6 +28,9 @@ export default function ChangeSole({navigation}) {
   const [firstLoaded, setFirstLoaded] = useState<boolean>(true)
   const plantCache = new Map<string, Plant>();
   const plantImageCache = new Map<string, string>();
+  const [visible, setVisible] = React.useState(false);
+  const onToggleSnackBar = () => setVisible(!visible);
+  const onDismissSnackBar = () => setVisible(false);
 
   const handleClose = () => {
     navigation.goBack();
@@ -42,7 +44,7 @@ export default function ChangeSole({navigation}) {
       // Get the metadata for each plant
       const plantDetails = new Plants();
       const plantDetailsDataPromise = plants.map(async (plant: UserPlant) => {
-        let plantImage: string = '';
+        let plantImage: string;
 
         // Check to see if the image exists
         if (plantImageCache.has(plant.stage)) {
@@ -92,6 +94,7 @@ export default function ChangeSole({navigation}) {
    const userId = AUTH.currentUser.uid;
    const users = new Users();
    await users.update(userId, {soleMateId: buddyId});
+    setVisible(true);
   };
 
 
@@ -101,7 +104,7 @@ export default function ChangeSole({navigation}) {
       <Layout>
         <View style={styles.header}>
           <IconButton icon={'close'} onPress={handleClose} iconColor={'#000'} size={35}></IconButton>
-          <Text style={styles.headerText}>Settings</Text>
+          <Text style={styles.headerText}>Change SoleMate</Text>
         </View>
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
           <ActivityIndicator size={'large'}></ActivityIndicator>
@@ -114,24 +117,50 @@ export default function ChangeSole({navigation}) {
     <Layout>
       <View style={styles.header}>
         <IconButton icon={'close'} onPress={handleClose} iconColor={'#000'} size={35}></IconButton>
-        <Text style={styles.headerText}>Settings</Text>
+        <Text style={styles.headerText}>Change SoleMate</Text>
       </View>
       <View style={styles.content}>
-        <SafeAreaView>
-          <ScrollView>
-            {userPlants.map((item: UserPlantsExtended) => (
-              <TouchableOpacity onPress={async () => {
-                await handleUpdateBuddy(item.id);
-              }} key={item.id}>
-                <Image source={{uri: item.plantImage}} style={{width: 100, height: 100}}></Image>
-                <Text>
-                  {item.plantDetails.name}
-                </Text>
-              </TouchableOpacity>
-            ))}
-          </ScrollView>
+        <SafeAreaView style={{ flex: 1 }}>
+            <FlatList
+              data={userPlants}
+              contentContainerStyle={{
+                gap: 15,
+                margin: 'auto',
+              }}
+              columnWrapperStyle={{
+                justifyContent: 'space-between',
+              }}
+              renderItem={({item}) => {
+                return (
+                  <TouchableOpacity key={item.id} onPress={async () => {
+                    await handleUpdateBuddy(item.id);
+                  }} style={{
+                    alignItems: 'center',
+                    justifyContent: 'center',
+                    width: 50,
+                    height: 120,
+                  }}>
+                    <Image source={{uri: item.plantImage}} style={{
+                      width: 50,
+                      height: 120,
+                      resizeMode: 'contain',
+                    }}></Image>
+                    <Text>{item.plantDetails.name}</Text>
+                  </TouchableOpacity>
+                );
+              }}
+              keyExtractor={(item) => item.id}
+              numColumns={4}
+            >
+
+            </FlatList>
         </SafeAreaView>
       </View>
+      <Snackbar
+        visible={visible}
+        onDismiss={onDismissSnackBar}>
+        Changed SoleMate!
+      </Snackbar>
     </Layout>
   );
 }
@@ -153,17 +182,5 @@ export const styles = StyleSheet.create({
   content: {
     flex: 1,
     paddingHorizontal: 25,
-  },
-  itemsWrap: {
-    display: 'flex',
-    flexDirection: 'row',
-    flexWrap: 'wrap',
-    marginVertical: -(gap / 2),
-    marginHorizontal: -(gap / 2),
-  },
-  singleItem: {
-    marginHorizontal: gap / 2,
-    minWidth: childWidth,
-    maxWidth: childWidth,
   },
 });
