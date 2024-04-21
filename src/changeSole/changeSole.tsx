@@ -1,6 +1,6 @@
 import Layout from "../layout.tsx";
 import React, {useEffect, useState} from "react";
-import {Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, View} from "react-native";
+import {Dimensions, Image, SafeAreaView, ScrollView, StyleSheet, Text, TouchableOpacity, View} from "react-native";
 import {ActivityIndicator, IconButton} from "react-native-paper";
 import {UserPlants} from "../../backend/api/userPlants.ts";
 import {AUTH, STORAGE} from "../../backend/environments.ts";
@@ -9,6 +9,7 @@ import {Plant} from "../../backend/entities/plant.model.ts";
 import {Plants} from "../../backend/api/plants.ts";
 import { getDownloadURL, uploadBytes, ref, deleteObject } from "firebase/storage";
 import {Images} from "../../backend/api/images.ts";
+import {Users} from "../../backend/api/users.ts";
 
 
 const { width } = Dimensions.get('window');
@@ -52,6 +53,7 @@ export default function ChangeSole({navigation}) {
         else {
           const tempImage = await new Images().getImage(plant.stage);
           plantImageCache.set(plant.stage, tempImage);
+          plantImage = tempImage;
         }
 
         // Check to see if the plant data exists
@@ -85,6 +87,14 @@ export default function ChangeSole({navigation}) {
     getUserPlants();
   }, []);
 
+  // Updates the buddy to user
+  const handleUpdateBuddy = async (buddyId: string) => {
+   const userId = AUTH.currentUser.uid;
+   const users = new Users();
+   await users.update(userId, {soleMateId: buddyId});
+  };
+
+
   // First loaded
   if (firstLoaded) {
     return (
@@ -110,12 +120,14 @@ export default function ChangeSole({navigation}) {
         <SafeAreaView>
           <ScrollView>
             {userPlants.map((item: UserPlantsExtended) => (
-              <View key={item.id}>
+              <TouchableOpacity onPress={async () => {
+                await handleUpdateBuddy(item.id);
+              }} key={item.id}>
                 <Image source={{uri: item.plantImage}} style={{width: 100, height: 100}}></Image>
                 <Text>
                   {item.plantDetails.name}
                 </Text>
-              </View>
+              </TouchableOpacity>
             ))}
           </ScrollView>
         </SafeAreaView>

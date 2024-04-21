@@ -4,8 +4,25 @@ import {Button, IconButton} from "react-native-paper";
 import {styles} from "./styles.ts";
 import {globalStyles} from "../globalStyles.ts";
 import {AUTH} from "../../backend/environments.ts";
+import {useEffect, useState} from "react";
+import {Images} from "../../backend/api/images.ts";
+import {UserPlants} from "../../backend/api/userPlants.ts";
+import {Users} from "../../backend/api/users.ts";
 
 export default function Settings({navigation}) {
+  const [buddyImage, setBuddyImage] = useState<string>('')
+
+  // Gets the buddy image
+  useEffect(() => {
+    const getBuddyImage = async () => {
+      const currUser = await new Users().get(AUTH.currentUser.uid);
+      const buddy = await new UserPlants().get(currUser.soleMateId)
+      const buddyImage = await new Images().getImage(buddy.stage);
+      setBuddyImage(buddyImage);
+    }
+    getBuddyImage();
+  }, []);
+
   const handleClose = () => {
     navigation.goBack();
   };
@@ -30,7 +47,10 @@ export default function Settings({navigation}) {
           <Image style={styles.userImage} source={require('../../assets/avatars/dino-buddy.png')}></Image>
         </View>
         <View style={styles.buddyIcon}>
-
+          {buddyImage ? <Image style={{
+            width: 100,
+            height: 100,
+          }} source={{uri: buddyImage}}></Image> : null}
         </View>
       </View>
 
