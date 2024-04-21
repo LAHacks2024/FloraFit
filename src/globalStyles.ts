@@ -2,6 +2,7 @@ import {StyleSheet} from "react-native";
 
 export const globalStyles = StyleSheet.create({
   header: {
+    marginTop: 30,
     width: '100%',
     paddingHorizontal: 25,
     paddingVertical: 20,

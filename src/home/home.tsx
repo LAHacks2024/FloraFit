@@ -58,13 +58,15 @@ export default function Map({navigation}) {
 
     const pastStepCountResult = await Pedometer.getStepCountAsync(start, end);
     if (pastStepCountResult) {
+      console.log('pastStepCountResult', pastStepCountResult.steps)
       setStepCount(pastStepCountResult.steps);
-      if (user?.inventory.length === 0 && pastStepCountResult.steps > 1000) {
-        navigateToNewItem();
-      }
+      // if (user?.inventory.length === 0 && pastStepCountResult.steps > 1000) {
+      //   navigateToNewItem();
+      // }
     }
 
     return Pedometer.watchStepCount(result => {
+      console.log('result', result)
       console.log('steps', result.steps);
       setStepCount(count => count + result.steps);
       setCurrentStepCount(result.steps);
@@ -73,19 +75,23 @@ export default function Map({navigation}) {
 
 
   useEffect(() => {
+    let isMounted = true; // Flag to check mount status
     let subscription;
-    const getSubscription = async () => {
-      subscription = await subscribe();
-    };
 
-    getSubscription();
+    subscribe().then(sub => {
+      if (isMounted) {
+        subscription = sub;
+      } else {
+        sub?.remove(); // If component is not mounted, remove the subscription immediately
+      }
+    });
 
     return () => {
-      if (subscription) {
-        subscription.remove();
-      }
+      isMounted = false;
+      subscription?.remove();
     };
   }, []);
+
 
 
    // stops and redirection handling
@@ -121,13 +127,11 @@ export default function Map({navigation}) {
       if(granted) {
           const currentPosition = await getCurrentPositionAsync();
           setLocation(currentPosition);
-  
         }
    }
 
    useEffect(()=> {
       requestLocationPermission();
-  
     }, []);
 
    useEffect(()=> {
@@ -168,11 +172,7 @@ export default function Map({navigation}) {
 
     return (
       <View style={styles.container}>
-        <Text>Pedometer.isAvailableAsync(): {isPedometerAvailable}</Text>
-        <Text>Steps taken in the last 24 hours: {stepCount}</Text>
-        <Text>Walk! And watch this go up: {currentStepCount}</Text>
-
-        <MapView 
+        <MapView
           provider={PROVIDER_GOOGLE}
           ref={mapRef}
           style={styles.map}
@@ -258,14 +258,16 @@ export default function Map({navigation}) {
                   height: 100, 
                   width: 100, 
                   marginBottom: 10,
-                  resizeMode: 'contain'}}/>
+                  resizeMode: 'contain',
+                 alignSelf: 'center'
+            }}/>
             {isPedometerAvailable && <Text style={styles.pedometerTxt}>Steps {stepCount}</Text>}
             {buddy && (currentStepCount > 10 * (buddy.stage == PlantStage.FIRST ? 2 : 4) && buddy.stage != PlantStage.THIRD) &&
                <TouchableOpacity
                   style={styles.touchableLeft}
                   onPress={() => navigateToEvolution()}
                > 
-                  <Text style={{color: 'white'}}>Level Up Your Buddy!</Text>
+                  <Text style={{color: 'black'}}>Level Up Your Buddy!</Text>
                </TouchableOpacity>}
 
          </View>

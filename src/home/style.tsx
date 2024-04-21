@@ -21,7 +21,6 @@ export const styles = StyleSheet.create({
       position:'absolute',
       top: 10,
       left: 10,
-
       display: 'flex',
       flexDirection: 'column',
       justifyContent: 'center',
@@ -54,12 +53,10 @@ export const styles = StyleSheet.create({
     },
   touchableLeft: {
     padding: 10,
-    backgroundColor: '#BCDCC9',
-  }, // TODO
+  },
   touchableRight: {
-
-  }, // TODO
-
+  padding: 10,
+  },
   pedometerTxt: {
     fontSize: RFPercentage(2.5),
     fontWeight: 'bold',
