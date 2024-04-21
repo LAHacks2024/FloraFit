@@ -13,6 +13,7 @@ import StopJournaling from './src/stop-journaling/stop-journaling';
 import LogInPage from './src/loginpage/loginpage';
 import { useFonts } from 'expo-font';
 import Greenhouse from './src/greenhouse/greenhouse';
+import SignUpPage from './src/signup_page/signup';
 
 const Stack = createStackNavigator();
 
@@ -20,6 +21,7 @@ export default function App() {
 
   const [fontsLoaded, fontError] = useFonts({
     'DMSans': require('./assets/fonts/static/DMSans-Bold.ttf'),
+    'PressStart2P': require('./assets/fonts/PressStart2P-Regular.ttf')
   });
 
 
@@ -36,6 +38,7 @@ export default function App() {
         <Stack.Screen name="Stop" component={Stop} />
         <Stack.Screen name="StopJournaling" component={StopJournaling} />
         <Stack.Screen name="LogInPage" component={LogInPage} />
+        <Stack.Screen name="SignUpPage" component={SignUpPage} />
 
         <Stack.Screen name="Greenhouse" component={Greenhouse} />
       </Stack.Navigator>
