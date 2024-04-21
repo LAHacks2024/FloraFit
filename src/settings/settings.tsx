@@ -8,6 +8,8 @@ import {useEffect, useState} from "react";
 import {Images} from "../../backend/api/images.ts";
 import {UserPlants} from "../../backend/api/userPlants.ts";
 import {Users} from "../../backend/api/users.ts";
+import { Plants } from "../../backend/api/plants.ts";
+import { PlantStage } from "../../backend/entities/UserPlant.model.ts";
 
 export default function Settings({navigation}) {
   const [buddyImage, setBuddyImage] = useState<string>('')
@@ -16,8 +18,16 @@ export default function Settings({navigation}) {
   useEffect(() => {
     const getBuddyImage = async () => {
       const currUser = await new Users().get(AUTH.currentUser.uid);
-      const buddy = await new UserPlants().get(currUser.soleMateId)
-      const buddyImage = await new Images().getImage(buddy.stage);
+      const buddy = await new UserPlants().get(currUser.soleMateId);
+      const plant = await new Plants().get(buddy.plantId)
+      let buddyImage;
+      if (buddy.stage == PlantStage.THIRD ) {
+        const buddyImage = await new Images().getImage(plant.name);
+
+      } else {
+        const buddyImage = await new Images().getImage(buddy.stage);
+      }
+
       setBuddyImage(buddyImage);
     }
     getBuddyImage();
