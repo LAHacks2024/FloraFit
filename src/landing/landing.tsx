@@ -1,3 +1,4 @@
+import React from 'react';
 import { StyleSheet, Text, View, Image, TouchableOpacity, ImageBackground, Animated } from 'react-native';
 import { styles } from './style.ts';
 import React, { useEffect, useRef } from 'react';

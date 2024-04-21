@@ -6,7 +6,7 @@ import {styles} from "./style";
 import {globalStyles} from "../globalStyles";
 import {Banner, Button} from "react-native-paper";
 import Layout from "../layout.tsx";
-import {UserJournal} from "../../backend/api/userJournal.ts";
+import {UserJournals} from "../../backend/api/userJournal.ts";
 import {UserJournalDTO} from "../../backend/entities/UserJournal.entity.ts";
 import {AUTH} from "../../backend/environments.ts";
 import {UserPlants} from "../../backend/api/userPlants.ts";
@@ -36,7 +36,7 @@ export default function StopJournaling({ route, navigation }) {
      setHasError(false);
      setErrorMessage('');
 
-     const journal = new UserJournal();
+     const journal = new UserJournals();
      const journalData: UserJournalDTO = {
        userId: AUTH.currentUser.uid,
        prompt: question,

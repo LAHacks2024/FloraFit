@@ -16,6 +16,7 @@ import Greenhouse from './src/greenhouse/greenhouse';
 import Settings from './src/settings/settings';
 import ChangeSole from "./src/changeSole/changeSole.tsx";
 import PlantDex from "./src/plantDex/plantDex.tsx";
+import Journal from "./src/journal/journal.tsx";
 import Evolution from './src/evolve-buddy/evolve-buddy.tsx';
 import SignUpPage from './src/signup_page/signup';
 
@@ -51,8 +52,14 @@ export default function App() {
         }} />
         <Stack.Screen name={"PlantDex"} component={PlantDex} options={{
           headerShown: false
-        }} />        <Stack.Screen name="SignUpPage" component={SignUpPage} />
-
+        }} />
+        <Stack.Screen name="Greenhouse" component={Greenhouse} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name="Journal" component={Journal} options={{
+          headerShown: false
+        }} />        
+        <Stack.Screen name="SignUpPage" component={SignUpPage} />
         <Stack.Screen name="Greenhouse" component={Greenhouse} />
         <Stack.Screen name="Evolution" component={Evolution} />
       </Stack.Navigator>

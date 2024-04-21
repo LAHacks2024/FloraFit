@@ -20,6 +20,26 @@ export const styles = StyleSheet.create({
   },
   containerStyle: {
     backgroundColor: 'white',
-    padding: 25,
+    padding: 35,
+    margin: 10,
+    borderRadius: 15,
+  },
+  modalImage: {
+    width: 160,
+    height: 220,
+    marginBottom: 15,
+    alignSelf: 'center',
+  },
+  modalContent: {
+    alignItems: 'center',
+  },
+  modalTitle: {
+    fontSize: 20,
+    fontWeight: 'bold',
+    marginVertical: 15,
+  },
+  modalDescription: {
+    fontSize: 18,
+    lineHeight: 28,
   },
 });
