@@ -9,14 +9,17 @@ import { Pedometer } from 'expo-sensors';
 
 export default function Map({navigation}) {
 
+   // user location and stops state
    const [location, setLocation] = useState<LocationObject | null>(null);
    const [stops, setStops] = useState<Array<any>>([]);
-   const timeAppOpened = new Date();
    const mapRef = useRef<MapView>(null);
+
+   // step count state
    const [isPedometerAvailable, setIsPedometerAvailable] = useState('checking');
    const [stepCount, setStepCount] = useState(0);
    const [currentStepCount, setCurrentStepCount] = useState(0);
 
+   // pedometer handling
    const subscribe = async () => {
       const isAvailable = await Pedometer.isAvailableAsync();
       setIsPedometerAvailable(String(isAvailable));
@@ -37,16 +40,21 @@ export default function Map({navigation}) {
         return Pedometer.watchStepCount(result => {
          setStepCount((count) => count + result.steps);
          setCurrentStepCount(result.steps);
+         if (currentStepCount > 100) {
+            console.log('level up time')
+         }
         });
       }
     };
   
-    useEffect(() => {
-      const subscription = subscribe();
-      return () => subscription && subscription.remove();
-    }, []);
+
+   useEffect(() => {
+   const subscription = subscribe();
+   return () => subscription && subscription.remove();
+   }, []);
    
 
+   // stops and redirection handling
    const navigateToStop = (stopName: string, location: string) => {
       navigation.navigate('Stop', {
          stopName: stopName,
@@ -77,7 +85,7 @@ export default function Map({navigation}) {
       watchPositionAsync({
         accuracy: LocationAccuracy.Highest, 
         // timeInterval: 3000, /** apparently this is android only */
-        distanceInterval: 80, /** 10 meters walked, update position */
+        distanceInterval: 100, /** 10 meters walked, update position */
       }, (response) => {
             console.log('hi', response.coords.latitude, response.coords.longitude)
             fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=500&type=park&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
@@ -89,42 +97,6 @@ export default function Map({navigation}) {
                .catch(error => {
                  console.error(error);
             });
-            // update and check for distance travelled if one of the following is true
-            // (1) app loads - in which case, set initial location
-            // (2) user has travelled a sufficient distance since they opened the app, in which case, update initial location and stops displayed.
-            // otherwise, merely update current location (no step refreshes)
-               /**
-                *                fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?keyword=cruise&location=${response.coords.latitude},${response.coords.longitude}&radius=70000&type=university&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
-               .then(response => response.json())
-               .then(json => {
-                 console.log(json)
-               })
-               .catch(error => {
-                 console.error(error);
-               });
-                */
-               // get new stops
-               /**
-                * URL for us: https://maps.googleapis.com/maps/api/place/nearbysearch/json
-                              ?keyword=cruise
-                              &location=-33.8670522%2C151.1957362
-                              &radius=1500
-                              &type=restaurant
-                              &key=YOUR_API_KEY
-                * EXAMPLE OF ENDPOINT CALL
-                * 
-               fetch('https://mywebsite.com/endpoint/', {
-                  method: 'POST',
-                  headers: {
-                     Accept: 'application/json',
-                     'Content-Type': 'application/json',
-                  },
-                  body: JSON.stringify({
-                     firstParam: 'yourValue',
-                     secondParam: 'yourOtherValue',
-                  }),
-               });
-               */
             setLocation(response);
             mapRef.current?.animateCamera({
                pitch: 70,
@@ -184,6 +156,7 @@ export default function Map({navigation}) {
 
          </MapView>
          <View style={styles.topLeft}>
+            <Image source={require('../../assets/step-icon.png')} style={{height: 100, width: 100, resizeMode: 'contain'}}/>
             {isPedometerAvailable && <Text>Steps {stepCount}</Text>}
             {isPedometerAvailable && <Text>Steps {currentStepCount}</Text>}
 
