@@ -69,7 +69,6 @@ export default function App() {
         <Stack.Screen name={"Raid"} component={RaidScreen} options={{
           headerShown: false
         }} />  
-        <Stack.Screen name="Greenhouse" component={Greenhouse} />
         <Stack.Screen name="Evolution" component={Evolution} />
       </Stack.Navigator>
     </NavigationContainer>
