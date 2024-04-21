@@ -16,7 +16,7 @@ export const globalStyles = StyleSheet.create({
   },
   headerCellText: {
     fontStyle: "italic",
-    fontSize: 12,
+    fontSize: 16,
   },
   backButton: {
     transform: [{scale: 3}],
@@ -28,8 +28,9 @@ export const globalStyles = StyleSheet.create({
     gap: 15,
   },
   headerInnerCellHeader: {
-    fontWeight: "bold",
-    fontSize: 20,
+    fontSize: 30,
+    fontFamily: 'DMSans-Bold',
+    fontWeight: 'bold',
   },
   content: {
     paddingHorizontal: 25,

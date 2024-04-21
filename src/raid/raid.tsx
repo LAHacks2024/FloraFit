@@ -1,35 +1,111 @@
 import { LinearGradient } from "expo-linear-gradient";
 import { collection } from "firebase/firestore";
-import { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { View, Image} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { IconButton, Card, Text } from "react-native-paper";
 import { Boss } from "../../backend/entities/raid.model";
+import { globalStyles } from "../globalStyles";
+import {Button} from "react-native-paper";
+import Layout from "../layout";
+import {styles} from "./style";
+import { Users } from "../../backend/api/users";
+import { AUTH } from "../../backend/environments";
+import { UserPlants } from "../../backend/api/userPlants";
+import { PlantStage, UserPlantDTO } from "../../backend/entities/UserPlant.model";
+import { User } from "../../backend/entities/user.model";
 
 
-enum collectionStatuses {
-    COLLECTED = 'collected',
-    NOT_COLLECTED = 'not collected'
-}
 
 
 
 export default function RaidScreen({ route, navigation }){
 
     const stopName = route.params.stopName; //route params
-    const city = route.params.city; //route params
+    const latitude = route.params.latitude; //route params
+    const longitiude = route.params.longitiude; //route params
+
+    const [user, setUser] = useState<User| undefined >(null);
+    const [hasError, setHasError] = useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = useState<string>('')
+
+    useEffect(() => {
+        const getBuddy = async () => {
+          const currUser = await new Users().get(AUTH.currentUser.uid);
+          const buddy = await new UserPlants().get(currUser.soleMateId);
+          console.log(buddy);
+          setUser(currUser);
+  
+        }
+        getBuddy();
+     }, []);
+  
+
     const bossOptions = [Boss.PEAR_TREE, Boss.SOUR_FIG, Boss.THISTLE]
     const pickedBoss = bossOptions[Math.floor(Math.random()*bossOptions.length)];
+
+
+    function removeFirst(arr, value) {
+        var index = arr.indexOf(value);
+        if (index > -1) {
+          arr.splice(index, 1);
+        }
+        return arr;
+      }
+
+     function getDescription(boss: string) {
+        if (boss == Boss.PEAR_TREE) {
+            return 'Bradford pear trees, once popular for their spring flowers, are now considered invasive. They crowd out native plants, reducing biodiversity, and their weak branches are prone to breaking in storms.';
+        } else if (boss == Boss.SOUR_FIG) {
+            return 'The Sour Fig, also known as Hottentot-fig, is a ground-creeping plant with edible fruits and leaves. However, in places like California and Australia, this fast-growing plant can become invasive, outcompeting native vegetation and disrupting the natural balance of coastal ecosystems.';
+        } else {
+            return 'The Italian Thistle, an invasive plant, can aggressively outcompete native vegetation for resources. This disrupts ecosystems and reduces biodiversity in the areas it takes hold.';
+        }
+
+    }
+
+    const onSubmit = async () => {
+        // does user have sufficient items?
+        const itemsArray = ['shovel', 'wheelbarrow', 'watering can']
+        console.log('hi')
+        if (!user || !(itemsArray.every((val) => user.inventory.includes(val)))) {
+          setErrorMessage('Please have more than 50 characters');
+          setHasError(true);
+          await navigation.goBack();
+          return;
+        }
+        console.log('hi')
+        setHasError(false);
+        setErrorMessage('');
+
+        let newInventoryShovel = removeFirst(user.inventory, 'shovel');
+        let newInventoryWC = removeFirst(newInventoryShovel, 'watering can');
+        let newInventoryWB = removeFirst(newInventoryWC, 'wheelbarrow');
+
+        const userId = AUTH.currentUser.uid;
+        const users = new Users();
+
+        await users.update(userId, {inventory: newInventoryWB});
+
+        const userPlant = new UserPlants();
+        const plant: UserPlantDTO = {
+            userId: AUTH.currentUser.uid,
+            plantId: 'WyQ7oPOi3M0bge42bRa4', // TODO: Remove the static
+            stage: PlantStage.FIRST,
+            currentStepCount: 0,
+        };
+        await userPlant.create(plant);
+
+        await navigation.navigate('NewPlant');
+      }
+
+    const navigateToHome = () => {
+        navigation.navigate('Home');
+     };
+
     
-    const handleClose = () => {
-        navigation.goBack();
-      };
 
-      const [collectionStatus, setCollectionStatus] = useState(collectionStatuses.NOT_COLLECTED)
 
-      //write code to iterate over array of booleans and render checkmarks/who found it or not
-      let toolStatus = [false,false,false];
-      let toolUsers:string[] = [ '', '', ''];
     return (
         <View
         style={{
@@ -41,242 +117,64 @@ export default function RaidScreen({ route, navigation }){
             style={{
                 flex:1
             }}>
+        <View style={[globalStyles.header, {marginTop: 50}]}>
+          <Button style={globalStyles.backButton} icon={"arrow-left-bold-circle"}
+            onPress={() =>
+              navigateToHome()
+            }
+          >
+            <></>
+          </Button>
+           <View style={globalStyles.headerCell}>
+              <View style={globalStyles.headerInnerCell}>
+                 <Image source={require('../../assets/markers/raid-marker.png')} style={{width: 28, height: 28, resizeMode:'contain'}}></Image>
+                 <Text style={globalStyles.headerInnerCellHeader}>Invasion!</Text>
+              </View>
+              <Text style={globalStyles.headerCellText}>{stopName}</Text>
+           </View>
+        </View>
+        <View style={{flex: 1, alignContent: 'center', flexDirection: 'row', justifyContent: 'center'}}>
+            {pickedBoss == Boss.THISTLE && <Image style={styles.mainImage} source={require('../../assets/bosses/italian-thistle.jpeg')}/>}
+            {pickedBoss == Boss.PEAR_TREE && <Image style={styles.mainImage} source={require('../../assets/bosses/bradford-pear-tree.jpeg')}/>}
+            {pickedBoss == Boss.SOUR_FIG && <Image style={styles.mainImage} source={require('../../assets/bosses/sour-fig.jpeg')}/>}
+        </View>
+
+        <View style={{marginTop: 50, width: '80%', alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', backgroundColor: 'white', borderRadius: 10, padding: 20}}>
+            <Text style={{fontSize: 20, fontFamily: 'DMSans-Bold',fontWeight: 800}}>{pickedBoss}</Text>
+        </View>
 
 
-            <View
-            style={{flexDirection:'row'}}>
-                <IconButton 
-                icon={'close'} 
-                onPress={handleClose} 
-                iconColor={'#000'} size={35}
-                style={{position:'absolute',top: 40,}}>
+        <View style={{marginTop: 10, alignSelf: 'center', alignItems: 'center'}}>
+            <Text style={{fontSize: 16, fontFamily: 'DMSans-Variable', textAlign: 'center', width:310}}>{getDescription(pickedBoss)}</Text>
+            <Text style={{marginTop: 20, fontSize: 16, fontFamily: 'DMSans'}}>Needed Items</Text>
+        </View>
+        <View style={{marginTop: 20, flex: 1, alignContent: 'center', flexDirection: 'row', justifyContent: 'space-around'}} >
+            <Image style={{ height: 40, width: 40, resizeMode: 'contain'}}
+            source={require('../../assets/items/shovel.png')}/>
+             <Image style={{ height: 40, width: 40, resizeMode: 'contain'}}
+            source={require('../../assets/items/wheelbarrow.png')}/>
+             <Image style={{ height: 40, width: 40, resizeMode: 'contain'}}
+            source={require('../../assets/items/watering-can.png')}/>
+        </View>
 
-                </IconButton>
-
-                <Image
-                source={require('../../assets/Vector.png')}
-                style={{position:'absolute',top: 50,left: 120}}/>
-                <View
-                style={{position:'absolute',right: 55,top: 50,}}>
-
-                <Text
-                style={{
-                    fontFamily:'DMSans',
-                    fontWeight:'bold',
-                    fontSize: 30,
-                    textAlign:'left',
-                }}>Invasion!</Text>
-                
-                {/*Replace this with actual location of bleach*/}
-                <Text
-                style={{
-                    fontFamily:'DMSans',
-                    fontSize:16,
-                    textAlign:'left',
-                }}>{stopName}</Text>
-                </View>
-
-                <Card
-                style={{
-                    position:'absolute',
-                    marginTop:400,
-                    left: 50,
-                    width: 300,
-                    
-                }}>
-                    <Card.Content>
-                        <Text style={{
-                            textAlign:'center',
-                            fontWeight:'bold',
-                            fontFamily:'DMSans',
-                            fontSize:25
-                        }} variant="titleLarge">{pickedBoss}</Text>
-                    </Card.Content>
-                </Card>
-
-                <Text
-                    style={{
-                        position:'absolute',
-                        top:520,
-                        fontFamily:'DMSans',
-                        fontSize:16,
-                        left: 40,
-                        // bottom: 150,
-                    }}
-                >Find these tools to help stop this invasion!
-                </Text>
+        <Button contentStyle={{ paddingVertical: 15, }} style={styles.submitButton} onPress={onSubmit}>
+            <Text style={styles.buttonText}>check inventory</Text>
+        </Button>
 
 
-            </View>
-
-            <Image
-            style={{
-                height:200,
-                width:300,
-                borderRadius: 15,
-                position:'absolute',
-                top:150,
-                left: 50,
-
-            }}    
-            source={require('../../assets/invasive_plants/Natural_Bridges_with_pelicans_and_cormorants.png')}/>
-
-            {/* left tool */}
-            <View
-            style={{
-                position:'absolute',
-                top: 600,
-                left: 20,
-            }}>
-
-                <Image
-                source={require('../../assets/tool_background_raid.png')}/>
-                <Image
-                style={{
-                    bottom: 70,
-                    left: 10,
-                }}
-                source={require('../../assets/shovel.png')}/>
-
-                {
-                    toolStatus[0] ? (
-                        <>
-                            <Image 
-                            style={{
-                                position:'absolute',
-                                bottom:50,
-                                left: 50,
-                            }}
-                            source={require('../../assets/tool_gathered_checkmark.png')}/>
-                            <Text
-                            style={{
-                                position:'absolute',
-                                left: 10,
-                                bottom: 10,
-                                fontFamily:'DMSans',
-                            }}
-                            >Found by {toolUsers[0]} </Text>
-                        </>
-                    ) : (
-                        <>
-                        </>
-                    )
-                }
-            </View>
-
-            {/* middle tool */}
-            <View
-            style={{
-                position:'absolute',
-                top: 600,
-                left: 150,
-            }}>
-            <Image
-            style={{
-            }}
-            source={require('../../assets/tool_background_raid.png')}/>
-
-            <Image
-            style={{
-                bottom: 70,
-                left: 10,
-            }}
-            source={require('../../assets/shovel.png')}/>
-                            {
-                    toolStatus[1] ? (
-                        <>
-                            <Image 
-                            style={{
-                                position:'absolute',
-                                bottom:50,
-                                left: 50,
-                            }}
-                            source={require('../../assets/tool_gathered_checkmark.png')}/>
-                            <Text
-                            style={{
-                                position:'absolute',
-                                left: 10,
-                                bottom: 10,
-                                fontFamily:'DMSans',
-                            }}
-                            >Found by {toolUsers[1]} </Text>
-                        </>
-                    ) : (
-                        <>
-                        </>
-                    )
-                }
-            
-            </View>
-
-            {/* right tool */}
-
-            <View
-            style={{
-                position:'absolute',
-                top: 600,
-                left: 280,       
-            }}
-            >
-            <Image
-            style={{
-            }}
-            source={require('../../assets/tool_background_raid.png')}/>
-            
-            <Image
-            style={{
-                bottom: 70,
-                left: 10,
-            }}
-            source={require('../../assets/shovel.png')}/>
-            {
-                toolStatus[2] ? (
-                    <>  
-                        <Image 
-                        style={{
-                            position:'absolute',
-                            bottom:50,
-                            left: 50,
-                        }}
-                        source={require('../../assets/tool_gathered_checkmark.png')}/>
-                        <Text
-                        style={{
-                            position:'absolute',
-                            left: 10,
-                            bottom: 10,
-                            fontFamily:'DMSans',
-                        }}
-                        >Found by {toolUsers[2]} </Text>
-                    </>
-                    ) : (
-                        <>
-                        </>
-                    )
-                }
-            </View>
-
-            <TouchableOpacity
-            style={{
-                borderRadius: 10,
-                backgroundColor: '#2A3779',
-                padding:20,
-                width: 200,
-                position:'absolute',
-                top: 750,
-                left: 90,
-            }}
-            ><Text
-            style={{
-                fontWeight: 'bold',
-                fontFamily: 'DMSans',
-                alignContent: 'center',
-                color:'white',
-                textAlign: 'center'
-            }}>Find Items in Inventory</Text></TouchableOpacity>
-            </LinearGradient>
+        </LinearGradient>
 
 
         </View>
+
+
+
+
+
+
+   
     )
 
 }
+
+

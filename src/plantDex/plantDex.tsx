@@ -48,7 +48,7 @@ export default function PlantDex({navigation}) {
   return (
    <PaperProvider>
      <Layout>
-       <View style={styles.header}>
+       <View style={[styles.header, {marginTop: 50}]}>
          <IconButton icon={'close'} onPress={handleClose} iconColor={'#000'} size={35}></IconButton>
          <Text style={styles.headerText}>PlantDex</Text>
        </View>

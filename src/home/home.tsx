@@ -15,14 +15,17 @@ import {AUTH} from "../../backend/environments.ts";
 
 export default function Map({navigation}) {
 
-   const [buddy, setBuddy] = useState<UserPlant | undefined >(null)
+   const [buddy, setBuddy] = useState<UserPlant | undefined >(null);
+   const [user, setUser] = useState<User | undefined >(null);
+
 
    useEffect(() => {
       const getBuddy = async () => {
         const currUser = await new Users().get(AUTH.currentUser.uid);
         const buddy = await new UserPlants().get(currUser.soleMateId);
         console.log(buddy);
-        setBuddy(buddy)
+        setBuddy(buddy);
+        setUser(currUser);
 
       }
       getBuddy();
@@ -54,8 +57,9 @@ export default function Map({navigation}) {
         if (pastStepCountResult) {
           setStepCount(pastStepCountResult.steps);
         }
-        if (pastStepCountResult.steps > 1000) {
-         console.log('you deserve an item')
+        if (user?.inventory.length == 0 && pastStepCountResult.steps > 1000) {
+            navigateToNewItem();
+         
         }
    
   
@@ -96,6 +100,9 @@ export default function Map({navigation}) {
    const navigateToEvolution = () => {
       navigation.navigate('Evolution');
    };
+   const navigateToNewItem = () => {
+      navigation.navigate('NewItem');
+   };
 
    async function requestLocationPermission() { 
       const {granted} = await requestForegroundPermissionsAsync();
@@ -130,7 +137,7 @@ export default function Map({navigation}) {
                .catch(error => {
                  console.error(error);
             });
-            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=200&type=parking&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
+            fetch(`https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${response.coords.latitude},${response.coords.longitude}&radius=500&type=parking&key=${'AIzaSyDG6bq8Ocb1SO_B68CFlWyL6sJXG19YbXk'}`)
                .then(response => response.json())
                .then(json => {
                  // console.log(json.results)
@@ -216,7 +223,7 @@ export default function Map({navigation}) {
                      }}
                      onPress={() => navigateToRaid(stop.name, stop.geometry.location.lat, stop.geometry.location.lng)}
                   >
-                     <Image source={require('../../assets/markers/stop-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
+                     <Image source={require('../../assets/markers/raid-marker.png')} style={{height: 85, width:85, resizeMode: 'contain'}} />
 
                   </Marker>
 
