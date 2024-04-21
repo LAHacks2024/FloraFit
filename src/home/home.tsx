@@ -44,40 +44,54 @@ export default function Map({navigation}) {
    const [currentStepCount, setCurrentStepCount] = useState(0);
 
    // pedometer handling
-   const subscribe = async () => {
-      const isAvailable = await Pedometer.isAvailableAsync();
-      setIsPedometerAvailable(String(isAvailable));
-  
-      if (isAvailable) {
-        const end = new Date();
-        const start = new Date();
-        start.setDate(end.getDate() - 1);
-  
-        const pastStepCountResult = await Pedometer.getStepCountAsync(start, end);
-        if (pastStepCountResult) {
-          setStepCount(pastStepCountResult.steps);
-        }
-        if (user?.inventory.length == 0 && pastStepCountResult.steps > 1000) {
-            navigateToNewItem();
-        }
-   
-  
-        return Pedometer.watchStepCount(result => {
-         setStepCount((count) => count + result.steps);
-         setCurrentStepCount(result.steps);
-        });
+  const subscribe = async () => {
+    const isAvailable = await Pedometer.isAvailableAsync();
+    setIsPedometerAvailable(String(isAvailable));
+
+    console.log('isAvailable', isAvailable);
+
+    if (!isAvailable) return null;
+
+    const end = new Date();
+    const start = new Date(end);
+    start.setDate(end.getDate() - 1);
+
+    const pastStepCountResult = await Pedometer.getStepCountAsync(start, end);
+    if (pastStepCountResult) {
+      console.log('pastStepCountResult', pastStepCountResult.steps)
+      setStepCount(pastStepCountResult.steps);
+      // if (user?.inventory.length === 0 && pastStepCountResult.steps > 1000) {
+      //   navigateToNewItem();
+      // }
+    }
+
+    return Pedometer.watchStepCount(result => {
+      console.log('result', result)
+      console.log('steps', result.steps);
+      setStepCount(count => count + result.steps);
+      setCurrentStepCount(result.steps);
+    });
+  };
+
+
+  useEffect(() => {
+    let isMounted = true; // Flag to check mount status
+    let subscription;
+
+    subscribe().then(sub => {
+      if (isMounted) {
+        subscription = sub;
+      } else {
+        sub?.remove(); // If component is not mounted, remove the subscription immediately
       }
+    });
+
+    return () => {
+      isMounted = false;
+      subscription?.remove();
     };
+  }, []);
 
-
-   useEffect(() => {
-     const sub = async () => {
-       const subscription = await subscribe();
-       return subscription && subscription.remove();
-     }
-
-      sub();
-   }, []);
 
 
    // stops and redirection handling
@@ -113,13 +127,11 @@ export default function Map({navigation}) {
       if(granted) {
           const currentPosition = await getCurrentPositionAsync();
           setLocation(currentPosition);
-  
         }
    }
 
    useEffect(()=> {
       requestLocationPermission();
-  
     }, []);
 
    useEffect(()=> {
@@ -160,7 +172,7 @@ export default function Map({navigation}) {
 
     return (
       <View style={styles.container}>
-        <MapView 
+        <MapView
           provider={PROVIDER_GOOGLE}
           ref={mapRef}
           style={styles.map}
@@ -246,14 +258,16 @@ export default function Map({navigation}) {
                   height: 100, 
                   width: 100, 
                   marginBottom: 10,
-                  resizeMode: 'contain'}}/>
+                  resizeMode: 'contain',
+                 alignSelf: 'center'
+            }}/>
             {isPedometerAvailable && <Text style={styles.pedometerTxt}>Steps {stepCount}</Text>}
             {buddy && (currentStepCount > 10 * (buddy.stage == PlantStage.FIRST ? 2 : 4) && buddy.stage != PlantStage.THIRD) &&
                <TouchableOpacity
                   style={styles.touchableLeft}
                   onPress={() => navigateToEvolution()}
                > 
-                  <Text style={{color: 'white'}}>Level Up Your Buddy!</Text>
+                  <Text style={{color: 'black'}}>Level Up Your Buddy!</Text>
                </TouchableOpacity>}
 
          </View>

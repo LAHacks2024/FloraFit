@@ -21,6 +21,7 @@ import Evolution from './src/evolve-buddy/evolve-buddy.tsx';
 import SignUpPage from './src/signup_page/signup';
 import RaidScreen from './src/raid/raid.tsx';
 import NewPlant from './src/new-plant/new-plant.tsx';
+import JournalForm from "./src/journal-form/journalForm.tsx";
 
 const Stack = createStackNavigator();
 
@@ -46,11 +47,13 @@ export default function App() {
         <Stack.Screen name="Home" component={Map} />
         <Stack.Screen name="Landing" component={Landing} options={{
           headerShown: false
-
           }}/>
-
-        <Stack.Screen name="Stop" component={Stop} />
-        <Stack.Screen name="StopJournaling" component={StopJournaling} />
+        <Stack.Screen name="Stop" component={Stop} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name="StopJournaling" component={StopJournaling} options={{
+          headerShown: false
+        }} />
         <Stack.Screen name="LogInPage" component={LogInPage} />
         <Stack.Screen name={"Settings"} component={Settings} options={{
           headerShown: false
@@ -71,9 +74,16 @@ export default function App() {
         <Stack.Screen name="SignUpPage" component={SignUpPage} />
         <Stack.Screen name="Raid" component={RaidScreen} options={{
           headerShown: false
-        }} />  
-        <Stack.Screen name="Evolution" component={Evolution} />
-        <Stack.Screen name="NewPlant" component={NewPlant} />
+        }} />
+        <Stack.Screen name="JournalForm" component={JournalForm} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name="Evolution" component={Evolution} options={{
+          headerShown: false
+        }} />
+        <Stack.Screen name="NewPlant" component={NewPlant} options={{
+          headerShown: false
+        }} />
       </Stack.Navigator>
     </NavigationContainer>
   );

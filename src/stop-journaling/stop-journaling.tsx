@@ -50,7 +50,7 @@ export default function StopJournaling({ route, navigation }) {
      const userPlant = new UserPlants();
      const plant: UserPlantDTO = {
        userId: AUTH.currentUser.uid,
-       plantId: 'WyQ7oPOi3M0bge42bRa4', // TODO: Remove the static
+       plantId: pickedPlant,
        stage: PlantStage.FIRST,
        currentStepCount: 0,
      };
