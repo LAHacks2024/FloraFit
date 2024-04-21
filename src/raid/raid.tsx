@@ -4,6 +4,7 @@ import { useState } from "react";
 import { View, Image} from "react-native";
 import { TouchableOpacity } from "react-native-gesture-handler";
 import { IconButton, Card, Text } from "react-native-paper";
+import { Boss } from "../../backend/entities/raid.model";
 
 
 enum collectionStatuses {
@@ -13,19 +14,22 @@ enum collectionStatuses {
 
 
 
-export default function RaidScreen({navigation}){
+export default function RaidScreen({ route, navigation }){
+
+    const stopName = route.params.stopName; //route params
+    const city = route.params.city; //route params
+    const bossOptions = [Boss.PEAR_TREE, Boss.SOUR_FIG, Boss.THISTLE]
+    const pickedBoss = bossOptions[Math.floor(Math.random()*bossOptions.length)];
+    
     const handleClose = () => {
         navigation.goBack();
       };
 
-      let raidLocation:string = "Natural Bridge Beach"
-      let raidTarget:string = "Italian Thistle"
       const [collectionStatus, setCollectionStatus] = useState(collectionStatuses.NOT_COLLECTED)
 
       //write code to iterate over array of booleans and render checkmarks/who found it or not
-      let toolStatus = [true,true,false]
-      let toolUsers:string[] = [ 'Jose', 'Rehan',null]
-    //write code to request image uri of plant invasion
+      let toolStatus = [false,false,false];
+      let toolUsers:string[] = [ '', '', ''];
     return (
         <View
         style={{
@@ -40,32 +44,20 @@ export default function RaidScreen({navigation}){
 
 
             <View
-            style={{
-                flexDirection:'row'
-            }}>
+            style={{flexDirection:'row'}}>
                 <IconButton 
                 icon={'close'} 
                 onPress={handleClose} 
                 iconColor={'#000'} size={35}
-                style={{
-                    position:'absolute',
-                    top: 40,
-                }}></IconButton>
+                style={{position:'absolute',top: 40,}}>
+
+                </IconButton>
 
                 <Image
                 source={require('../../assets/Vector.png')}
-                style={{    
-                    position:'absolute',
-                    top: 50,
-                    left: 120,
-                }}/>
+                style={{position:'absolute',top: 50,left: 120}}/>
                 <View
-                style={{
-                    position:'absolute',
-                    right: 55,
-                    top: 50,
-                    
-                }}>
+                style={{position:'absolute',right: 55,top: 50,}}>
 
                 <Text
                 style={{
@@ -81,17 +73,15 @@ export default function RaidScreen({navigation}){
                     fontFamily:'DMSans',
                     fontSize:16,
                     textAlign:'left',
-                }}>{raidLocation}</Text>
+                }}>{stopName}</Text>
                 </View>
 
                 <Card
                 style={{
                     position:'absolute',
-                    // bottom:90,
                     marginTop:400,
                     left: 50,
                     width: 300,
-                    // height: 150,
                     
                 }}>
                     <Card.Content>
@@ -100,7 +90,7 @@ export default function RaidScreen({navigation}){
                             fontWeight:'bold',
                             fontFamily:'DMSans',
                             fontSize:25
-                        }} variant="titleLarge">{raidTarget}</Text>
+                        }} variant="titleLarge">{pickedBoss}</Text>
                     </Card.Content>
                 </Card>
 

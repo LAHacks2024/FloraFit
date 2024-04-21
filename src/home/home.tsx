@@ -144,11 +144,6 @@ export default function Map({navigation}) {
                pitch: 70,
                center: response.coords
             });
-            setLocation(response);
-            mapRef.current?.animateCamera({
-               pitch: 70,
-               center: response.coords
-            });
 
       })
     }, [])

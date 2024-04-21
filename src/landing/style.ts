@@ -13,19 +13,11 @@ export const styles = StyleSheet.create({
       flex: 1,
       width: '100%'
     },
-    login_button: {
+    button: {
       borderRadius: 10,
       backgroundColor: '#2A3779',
       padding:15,
-      width: 100,
-      marginLeft: 40,
-    },
-    signup_button: {
-      borderRadius: 10,
-      backgroundColor: '#2A3779',
-      padding:15,
-      width: 100,
-      marginLeft: 90,
+      width: 150,
     },
     button_text: {
       // flex: 1,
@@ -45,28 +37,26 @@ export const styles = StyleSheet.create({
       // marginTop: 20,
       // marginBottom:900,
       position:'absolute',
-      bottom: 675
+      top: -40,
     },
     title: {
       fontFamily:'PressStart2P',
       fontSize: 60,
       textAlign: 'center',
+      alignSelf: 'center',
       color: '#3d61a7',
       // marginTop: 20
       position: 'absolute',
       width: 300,
-      bottom: 180,
-      // marginTop:100
-      marginBottom:390,
-      marginLeft:40
+      top: 120,
     },
     accountButtons: {
       flexDirection: 'row',
-      // marginTop: 90,
-      // marginBottom: 200,
-      // marginTop: 280,
+      alignContent: 'center',
+      justifyContent: 'space-around',
+      width: '100%',
       position:'absolute',
-      bottom: 50
+      bottom: 50,
     },
     clouds: {
       marginTop: 30,
