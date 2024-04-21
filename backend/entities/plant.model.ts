@@ -2,7 +2,8 @@ import {GeneralModel} from "./general.model";
 
 export interface PlantDTO {
   name: string;
-  dialogue: string;
+  dexDescription: string;
+  dialog: string[];
   imageURL: string;
   discoveryLocation: number;
 }

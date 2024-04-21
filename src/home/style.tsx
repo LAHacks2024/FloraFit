@@ -16,6 +16,12 @@ export const styles = StyleSheet.create({
       width: 50,
       height: 50,
     },
+    topLeft: {
+      position:'absolute',
+      top: 10,
+      left: 10,
+
+    },
     bottomRow: {
       flex: 1,
       height: 80,
@@ -31,7 +37,15 @@ export const styles = StyleSheet.create({
     },
     touchable: {
       height: 70,
+      width: 70,
+      overflow: "hidden",
+      backgroundColor: '#BCDCC9',
+      borderWidth: 3,
+      borderColor: '#fff',
+      borderRadius: 50,
     },
   touchableLeft: {}, // TODO
-  touchableRight: {} // TODO
+  touchableRight: {
+
+  } // TODO
   });

@@ -6,7 +6,7 @@ import React, { useState } from 'react';
 // import { Button } from 'react-native-paper';
 import { LinearGradient } from 'expo-linear-gradient';
 import {styles} from './style.ts'
-import {Banner, TextInput} from 'react-native-paper'
+import {TextInput} from 'react-native-paper'
 
 enum status {
   LOGGING_IN,
@@ -14,18 +14,18 @@ enum status {
   ERROR
 }
 
-export default function LogInPage({navigation}) {
+export default function SignUpPage({navigation}) {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-  const [error, setError] = useState<boolean>(false)
+    const [username, setUserName] = useState('')
+
 
 
     return (
       <View
       style={styles.loginBackground}
       >
-        <Banner visible={error}>Error!</Banner>
         <LinearGradient
           // Background Linear Gradient
           colors={[ '#b5dcf8','#e3eef6']}
@@ -38,7 +38,7 @@ export default function LogInPage({navigation}) {
             textAlign: 'center',
             marginTop: 50,
           }}
-          > Log In </Text>
+          > Sign Up </Text>
 
           <View 
           style={{
@@ -49,10 +49,23 @@ export default function LogInPage({navigation}) {
             <TextInput
             label='Email'
             value={email}
-            autoCapitalize={"none"}
             onChangeText={(text)=>setEmail(text)}
             ></TextInput>
           </View>
+{/* setting the user name */}
+          <View 
+          style={{
+            marginLeft: 30,
+            width: 300,
+            marginTop: 40
+          }}>
+            <TextInput
+            label='User Name'
+            value={username}
+            onChangeText={(text)=>setUserName(text)}
+            ></TextInput>
+          </View>
+
 {/* setting the password */}
           <View 
           style={{
@@ -62,12 +75,12 @@ export default function LogInPage({navigation}) {
           }}>
             <TextInput
             label='Password'
-            secureTextEntry={true}
-            autoCapitalize={"none"}
             value={password}
             onChangeText={(text)=>setPassword(text)}
             ></TextInput>
           </View>
+
+
 
           <TouchableOpacity
           style={{
@@ -79,16 +92,10 @@ export default function LogInPage({navigation}) {
             marginLeft: 140,
             
           }}
-          onPress={async ()=>{
+          onPress={()=>{
             const user = new Users()
-            try {
-              await user.loginUser(email, password)
-              navigation.navigate('Home')
-              setError(false);
-            } catch (err) {
-              setError(true);
-              console.log("error!")
-            }
+            user.createUser(email, password, username)
+            navigation.navigate('Home')
           }}>
             <Text
             style={{
@@ -97,13 +104,13 @@ export default function LogInPage({navigation}) {
               alignContent: 'center',
               color:'white',
               textAlign: 'center'
-            }}> Log In </Text>
+            }}> Sign Up </Text>
           </TouchableOpacity>
         <Image
         style={{
           height:200,
           width:200,
-          marginTop: 200,
+          marginTop: 30,
           flex:1,
           alignSelf: 'flex-end'
         }}
@@ -112,6 +119,7 @@ export default function LogInPage({navigation}) {
 
 
         </LinearGradient>
+        {/* <Text>Hello</Text> */}
       </View>
     );
 }

@@ -1,5 +1,5 @@
 import {Plant} from "./entities/plant.model";
-import { PlantsDB } from "./api/Plants";
+import { Plants } from "./api/plants";
 import { UserPlants } from "./api/userPlants";
 import { PlantStage } from "./entities/UserPlant.model";
 
@@ -54,13 +54,13 @@ const getRandomPlant = (): string | null => {
 }
 
 export const getPlant = async (userID: string, jounralID: string) => {
-  const plantsDB = new PlantsDB();
+  const plantsDB = new Plants();
   const userPlantsDB = new UserPlants();
 
   const randPlantName:string | null= getRandomPlant();
   if (!randPlantName) {
     const randPlant: Plant = await plantsDB.getWhere([["name", "==", randPlantName]])[0]; // get the plants info from the db
-    const plantDialoge = randPlant.dialogue[Math.floor(Math.random() * randPlant.dialogue.length)]; // get a random dialog
+    const plantDialoge = randPlant.dialog[Math.floor(Math.random() * randPlant.dialog.length)]; // get a random dialog
     userPlantsDB.create({
       userId: userID, 
       plantID: randPlant.id,
